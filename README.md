@@ -15,7 +15,6 @@ copiar el .env con los datos correctos de database
 hacer el push a neon para que me active las tablas de better-auth
 
         npx drizzle-kit push
-        
 
 MAIN BRANCH
 ==========
