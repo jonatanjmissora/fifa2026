@@ -1,6 +1,21 @@
-vamos a hacer distintos templates, cada uno en su correspondiente rama:
+uso del template
 
-Partiremos del main, con limpieza de codigo.
+                git clone https://github.com/jonatanjmissora/fifa2026.git
+
+copiar el .env con los datos correctos de database
+
+                BETTER_AUTH_SECRET=
+                BETTER_AUTH_URL=http://localhost:3000
+                VITE_BETTER_AUTH_BASE_URL=http://localhost:3000
+                BETTER_AUTH_BASE_URL=http://localhost:3000
+                DATABASE_URL=
+                GOOGLE_CLIENT_ID=
+                GOOGLE_CLIENT_SECRET=
+
+hacer el push a neon para que me active las tablas de better-auth
+
+        npx drizzle-kit push
+        
 
 MAIN BRANCH
 ==========

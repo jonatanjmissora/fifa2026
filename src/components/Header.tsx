@@ -39,8 +39,9 @@ export default function Header() {
 	return (
 		<header className="py-8 w-[90%] 2xl:w-[80%] mx-auto">
 			<nav className="flex items-center justify-between">
-				<Link to="/" className="text-xl font-semibold">
-					Logo
+				<Link to="/" className="text-xl font-semibold flex gap-2 items-center">
+					<img src="/fifa2026-logo.png" alt="FIFA 26" className="size-10" />
+					<span className="text-2xl font-bold">FIFA 26</span>
 				</Link>
 
 				{session ? (
