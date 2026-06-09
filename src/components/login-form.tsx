@@ -64,18 +64,18 @@ export function LoginForm({
 
 	const signIn = async () => {
 		toast.info("Funcionalidad de Google no implementada en el starter")
-		// setLoading(true)
+		setLoading(true)
 
-		// try {
-		// 	await authClient.signIn.social({
-		// 		provider: "google",
-		// 		callbackURL: "/",
-		// 	})
-		// } catch (_err) {
-		// 	// error ANTES de redirigir
-		// 	setLoading(false)
-		// 	toast.error("No se pudo iniciar sesión con Google")
-		// }
+		try {
+			await authClient.signIn.social({
+				provider: "google",
+				callbackURL: "/",
+			})
+		} catch (_err) {
+			// error ANTES de redirigir
+			setLoading(false)
+			toast.error("No se pudo iniciar sesión con Google")
+		}
 	}
 
 	return (

@@ -16,6 +16,13 @@ hacer el push a neon para que me active las tablas de better-auth
 
         npx drizzle-kit push
 
+habilitamos las funciones para utilizar google client en login y register.
+
+seguimos el video para habilitar nuestra app en google console
+para obtener las variables de entorno
+
+falta desplegar en netlify
+
 MAIN BRANCH
 ==========
 

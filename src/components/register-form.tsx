@@ -68,10 +68,10 @@ export function RegisterForm({
 
 	const signIn = async () => {
 		toast.info("Funcionalidad de Google no implementada en el starter")
-		// return await authClient.signIn.social({
-		// 	provider: "google",
-		// 	callbackURL: "/",
-		// })
+		return await authClient.signIn.social({
+			provider: "google",
+			callbackURL: "/",
+		})
 	}
 
 	return (
