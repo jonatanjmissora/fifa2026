@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>2026 World Cup Predictor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;600;700;800&amp;family=Hanken+Grotesk:wght@400;500;600&amp;family=JetBrains+Mono:wght@600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            background-color: #f7faf8;
+            min-height: max(884px, 100dvh);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        [data-view] { display: none; }
+        [data-view].active { display: block; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#00a859",
+                        "secondary-container": "#fcd400",
+                        "surface-container-high": "#e6e9e7",
+                        "secondary": "#705d00",
+                        "on-surface": "#181c1b",
+                        "surface-container-highest": "#e0e3e1",
+                        "surface": "#f7faf8",
+                        "secondary-fixed": "#ffe16d",
+                        "on-tertiary-fixed": "#1c1b1b",
+                        "secondary-fixed-dim": "#e9c400",
+                        "primary-fixed-dim": "#59df89",
+                        "on-tertiary-container": "#2b2b2b",
+                        "tertiary": "#5f5e5e",
+                        "background": "#f7faf8",
+                        "inverse-surface": "#2d3130",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "on-secondary-fixed": "#221b00",
+                        "tertiary-container": "#949291",
+                        "inverse-primary": "#59df89",
+                        "on-surface-variant": "#3d4a3f",
+                        "surface-variant": "#e0e3e1",
+                        "primary-fixed": "#77fca3",
+                        "surface-container": "#ebefed",
+                        "on-secondary-container": "#6e5c00",
+                        "surface-dim": "#d7dbd9",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#006d38",
+                        "surface-bright": "#f7faf8",
+                        "on-primary-container": "#003317",
+                        "on-background": "#181c1b",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eef1ef",
+                        "outline-variant": "#bccabc",
+                        "tertiary-fixed": "#e5e2e1",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#006d38",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#00210d",
+                        "outline": "#6d7b6e",
+                        "on-secondary-fixed-variant": "#544600"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "margin-desktop": "32px",
+                        "container-max": "1200px",
+                        "base": "4px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["anybody"],
+                        "score-display": ["anybody"],
+                        "headline-lg-mobile": ["anybody"],
+                        "headline-md": ["anybody"],
+                        "body-md": ["hankenGrotesk"],
+                        "label-caps": ["jetbrainsMono"],
+                        "body-lg": ["hankenGrotesk"],
+                        "display-lg": ["anybody"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "score-display": ["24px", {"lineHeight": "1.0", "fontWeight": "800"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface pb-24 lg:pb-0">
+<!-- TopNavBar -->
+<header class="bg-surface/80 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/30 px-margin-mobile py-4 w-full">
+<div class="flex justify-between items-center max-w-container-max mx-auto">
+<h1 class="font-display-lg text-headline-md tracking-tighter text-primary">2026 WORLD CUP PREDICTOR</h1>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">person</span>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto flex flex-col lg:flex-row">
+<!-- SideNavBar (Desktop Only) -->
+<aside class="h-screen w-64 hidden lg:flex flex-col border-r border-outline-variant/30 sticky top-[73px] bg-surface-container-low p-4">
+<div class="mb-6 px-2">
+<h2 class="font-headline-md text-primary">Tournament</h2>
+</div>
+<nav class="flex flex-col gap-1 overflow-y-auto hide-scrollbar">
+<button class="flex items-center gap-3 p-3 text-on-surface hover:bg-surface-container-high rounded-lg transition-all" id="side-nav-home" onclick="switchView('home')">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</button>
+<button class="flex items-center gap-3 p-3 text-on-surface bg-primary-container text-on-primary-container font-bold rounded-lg transition-all" id="side-nav-groups" onclick="switchView('groups')">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-caps text-label-caps">Groups</span>
+</button>
+<button class="flex items-center gap-3 p-3 text-on-surface hover:bg-surface-container-high rounded-lg transition-all" id="side-nav-table" onclick="switchView('table')">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-caps text-label-caps">Full Table</span>
+</button>
+</nav>
+<div class="mt-auto pt-4 border-t border-outline-variant/20">
+<button class="w-full py-3 bg-primary text-on-primary font-headline-md uppercase text-sm tracking-wider rounded-lg">Knockouts</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<section class="flex-1 px-margin-mobile md:px-margin-desktop py-6">
+<!-- View: Home / Standings Overview -->
+<div class="active" data-view="" id="view-home">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-primary mb-6">Group Standings Overview</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="overview-grid">
+<!-- Dynamic Group Cards (A-L) will be injected here -->
+</div>
+</div>
+<!-- View: Group Detail Predictor -->
+<div data-view="" id="view-groups">
+<!-- Mobile Group Tabs -->
+<div class="lg:hidden mb-6">
+<div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2" id="mobile-group-tabs">
+<!-- Group tabs generated by JS -->
+</div>
+</div>
+<div class="flex flex-col gap-8">
+<!-- Standings Table (Top of Group View) -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden shadow-sm">
+<div class="bg-primary px-4 py-3 text-on-primary font-headline-md flex justify-between items-center">
+<span id="active-group-title">Group A Standing</span>
+<span class="text-xs font-label-caps opacity-80">Live Update</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-surface-container-high text-on-surface-variant font-label-caps text-[10px]">
+<tr>
+<th class="px-4 py-3">POS</th>
+<th class="px-4 py-3">TEAM</th>
+<th class="px-2 py-3 text-center">MP</th>
+<th class="px-2 py-3 text-center">PG</th>
+<th class="px-2 py-3 text-center">PE</th>
+<th class="px-2 py-3 text-center">L</th>
+<th class="px-2 py-3 text-center">GF</th>
+<th class="px-2 py-3 text-center">GA</th>
+<th class="px-2 py-3 text-center font-bold">DIF</th>
+<th class="px-4 py-3 text-right font-bold text-primary">PTS</th>
+</tr>
+</thead>
+<tbody id="detailed-standings-body">
+<!-- Populated by JS -->
+</tbody>
+</table>
+</div>
+</div>
+<!-- Fixtures -->
+<div>
+<div class="flex justify-between items-end mb-4">
+<div>
+<h2 class="font-headline-md text-primary">Fixtures</h2>
+<p class="font-body-md text-on-surface-variant" id="active-group-teams"></p>
+</div>
+<button class="hidden lg:flex items-center gap-2 px-6 py-2 bg-primary text-on-primary font-bold rounded-full transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                                SAVE
+                            </button>
+</div>
+<div class="grid grid-cols-1 gap-4" id="fixtures-container">
+<!-- Populated by JS based on current group -->
+</div>
+</div>
+</div>
+</div>
+<!-- View: Full Table (Placeholder) -->
+<div data-view="" id="view-table">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-primary mb-6">Tournament Progress</h2>
+<div class="p-12 bg-surface-container border border-dashed border-outline rounded-xl text-center">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant mb-4">analytics</span>
+<p class="font-headline-md text-on-surface-variant">Global Rankings &amp; Comparison</p>
+<p class="text-on-surface-variant/60">Coming soon in the final tournament update.</p>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full py-8 mt-12 border-t border-outline-variant/20 flex flex-col items-center gap-4 px-margin-mobile bg-surface-container-highest">
+<div class="text-on-surface font-headline-md">2026 WORLD CUP™</div>
+<div class="flex gap-4 flex-wrap justify-center">
+<a class="font-body-md text-on-surface-variant hover:text-on-surface" href="#">Terms</a>
+<a class="font-body-md text-on-surface-variant hover:text-on-surface" href="#">Privacy</a>
+<a class="font-body-md text-on-surface-variant hover:text-on-surface" href="#">Cookies</a>
+<a class="font-body-md text-on-surface-variant hover:text-on-surface" href="#">Contact</a>
+</div>
+<p class="font-body-md text-on-surface-variant">© 2026 FIFA World Cup™ - For fans and analysis.</p>
+</footer>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full lg:hidden z-50 flex justify-around items-center h-16 bg-surface/95 backdrop-blur-sm border-t border-outline-variant/50 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+<button class="flex flex-col items-center justify-center text-on-surface-variant" id="mob-nav-home" onclick="switchView('home')">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-[10px]">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant" id="mob-nav-groups" onclick="switchView('groups')">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-caps text-[10px]">Groups</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant" id="mob-nav-table" onclick="switchView('table')">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-caps text-[10px]">Table</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-caps text-[10px]">More</span>
+</button>
+</nav>
+<!-- Floating Save Button -->
+<button class="fixed bottom-20 right-4 lg:hidden bg-primary text-on-primary w-14 h-14 rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-transform z-40">
+<span class="material-symbols-outlined">save</span>
+</button>
+<script>
+        const GROUPS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+        const TEAMS = {
+            'A': [
+                { id: 'MEX', name: 'Mexico', flag: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDobHB78BiUMqDWdgd5OlJmipUNGx_sz-KsqUH8uhHC-l2ielT0YQ-IwJcmVFcyMyWeaQ6YwHLW6SX2PdPi9gnQpogVDiOxM9E4JARJMhpGEb4XGaq1koxX2fFYbavWLISROq_-Csp2-gQyO8C1IFgfIga_3R3f69VQ9qtpHjZOCClQ8zX5OJPQaEM2tCsyypIDwqje_Q0XEcjQk3uWUrqoAFI8Gn1kWYo3PtGb7bjcLa4Xm4wsWj9KgDvDKfHlns6CXl9Y1ZwqVtU' },
+                { id: 'RSA', name: 'South Africa', flag: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA5D7Eb2GdlZ9IicTqQ7Bu3OtUu0ivQYiYIT9beaW6Ay7iZeBV2dRr2xmeCvr7SXpIYZJOrFwH6VlqNyJdWefMTJB2DY3-uDncrj2Fic67WZTg_vQ9CCYZ0ycDHZhoXbvGVbYlt8KextbpBdnCu8DImQKcJxhRN8tx8CVZWFu0lAzXHKBX9mOkvKMdKr3NPjOWe2Noe-2WZ7unoUwuTVnW2vd7ySBqvYUNChBnYZqDCWmC2dNGiyKZLbldcvV53jIyxuQEjdVH311U' },
+                { id: 'KOR', name: 'Korea Rep.', flag: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAG4d1x-aM3bnvujaYHN4IKgo2PZFzABCx6s7QrMCBKg6nGxN_HH6uEeUr69NkflJqRWMDzLI2T9f8zul_bIsDanTdItu9YW23NtJ5NxagNTnFxV4aJszRq5obuGMav3uF3R0vZ3wQzYN1SL_FogFeGyac4Epf82M5aDdnP3TFaB4OILJmqAdGPcW4B5MxoeaxKMUkja01wNTn6IRSBB5TVXZNdTi48SAsm4yBeGIb9TUvGqo3eAqxXinp3-khxyM1nqDhXI14B69A' },
+                { id: 'CZE', name: 'Czechia', flag: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBseCt65wikSWPqFU0j7FyVlxt31GrS8P8R4a7vptlrh9vD5ptK_dk_-bAsXd3K2P9OLagwiy7Gs5W-5dtghUHS2xvjS2rAmtIpRQpBxejmmZONdQnwFc7jpLPtD9hiHDTYriWO3Dm6ksNhP-7qVYVNpCf6La2om1AZiGYzJ5vvAS01MobQu5K4lHg696GVAxdFJI6BzpBRUsZpD6vU3HUNA4Ibvlpo6wp_4lfqN3csq5KpZhP8kgqxWFvdMd9dtJMT2Q4iuIEYz-w' }
+            ]
+        };
+
+        const FIXTURES = {
+            'A': [
+                { id: 1, home: 'MEX', away: 'RSA', date: 'Jueves 11 de Junio - 16:00hs', location: 'Estadio Azteca', hs: null, as: null },
+                { id: 2, home: 'KOR', away: 'CZE', date: 'Jueves 11 de Junio - 19:00hs', location: 'Estadio Guadalajara', hs: 1, as: 0 },
+                { id: 3, home: 'KOR', away: 'RSA', date: 'Jueves 18 de Junio - 15:00hs', location: 'Mercedes-Benz Stadium', hs: null, as: null },
+                { id: 4, home: 'MEX', away: 'CZE', date: 'Jueves 18 de Junio - 20:00hs', location: 'Estadio Guadalajara', hs: null, as: null },
+                { id: 5, home: 'RSA', away: 'CZE', date: 'Miércoles 24 de Junio - 17:00hs', location: 'Estadio Monterrey', hs: null, as: null },
+                { id: 6, home: 'KOR', away: 'MEX', date: 'Miércoles 24 de Junio - 20:00hs', location: 'Estadio Azteca', hs: null, as: null }
+            ]
+        };
+
+        let activeView = 'home';
+        let activeGroup = 'A';
+
+        function switchView(viewId) {
+            activeView = viewId;
+            document.querySelectorAll('[data-view]').forEach(v => v.classList.remove('active'));
+            document.getElementById(`view-${viewId}`).classList.add('active');
+            
+            const navIds = ['home', 'groups', 'table'];
+            navIds.forEach(id => {
+                const mobBtn = document.getElementById(`mob-nav-${id}`);
+                const sideBtn = document.getElementById(`side-nav-${id}`);
+                if (id === viewId) {
+                    mobBtn?.classList.add('text-primary');
+                    mobBtn?.classList.remove('text-on-surface-variant');
+                    sideBtn?.classList.add('bg-primary-container', 'text-on-primary-container', 'font-bold');
+                } else {
+                    mobBtn?.classList.remove('text-primary');
+                    mobBtn?.classList.add('text-on-surface-variant');
+                    sideBtn?.classList.remove('bg-primary-container', 'text-on-primary-container', 'font-bold');
+                }
+            });
+
+            if (viewId === 'home') renderOverview();
+            if (viewId === 'groups') renderGroupView(activeGroup);
+        }
+
+        function calculateStandings(group) {
+            const standings = TEAMS[group].map(team => ({
+                ...team, mp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0
+            }));
+
+            const fixtures = FIXTURES[group];
+            fixtures.forEach(match => {
+                if (match.hs !== null && match.as !== null) {
+                    const home = standings.find(t => t.id === match.home);
+                    const away = standings.find(t => t.id === match.away);
+                    
+                    home.mp++; away.mp++;
+                    home.gf += match.hs; home.ga += match.as;
+                    away.gf += match.as; away.ga += match.hs;
+                    
+                    if (match.hs > match.as) {
+                        home.w++; home.pts += 3; away.l++;
+                    } else if (match.hs < match.as) {
+                        away.w++; away.pts += 3; home.l++;
+                    } else {
+                        home.d++; away.d++; home.pts += 1; away.pts += 1;
+                    }
+                }
+            });
+
+            standings.forEach(t => t.gd = t.gf - t.ga);
+            return standings.sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf);
+        }
+
+        function renderOverview() {
+            const grid = document.getElementById('overview-grid');
+            grid.innerHTML = '';
+            
+            GROUPS.forEach(g => {
+                const hasData = TEAMS[g] !== undefined;
+                const data = hasData ? calculateStandings(g) : null;
+                const card = document.createElement('div');
+                card.className = "bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-4 shadow-sm cursor-pointer hover:shadow-md transition-shadow";
+                card.onclick = () => { activeGroup = g; switchView('groups'); };
+                
+                let tableHtml = `<div class="flex justify-between items-center mb-3">
+                                    <h3 class="font-headline-md text-primary">Group ${g}</h3>
+                                    <span class="material-symbols-outlined text-sm text-on-surface-variant">arrow_forward</span>
+                                 </div>`;
+                
+                if (data) {
+                    tableHtml += `<table class="w-full text-xs">
+                        <thead class="text-on-surface-variant/60 border-b border-outline-variant/10 font-label-caps">
+                            <tr>
+                                <th class="py-1 font-normal text-left">TEAM</th>
+                                <th class="text-center font-normal">P</th>
+                                <th class="text-center font-normal">PG</th>
+                                <th class="text-center font-normal">PE</th>
+                                <th class="text-center font-normal">DIF</th>
+                                <th class="text-right font-normal">PTS</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+                    data.forEach(t => {
+                        tableHtml += `<tr>
+                            <td class="py-2 flex items-center gap-2 font-bold">${t.id}</td>
+                            <td class="text-center">${t.mp}</td>
+                            <td class="text-center">${t.w}</td>
+                            <td class="text-center">${t.d}</td>
+                            <td class="text-center">${t.gd > 0 ? '+' + t.gd : t.gd}</td>
+                            <td class="text-right font-bold text-primary">${t.pts}</td>
+                        </tr>`;
+                    });
+                    tableHtml += `</tbody></table>`;
+                } else {
+                    tableHtml += `<div class="py-6 text-center text-on-surface-variant/40 text-xs italic">Matches pending</div>`;
+                }
+                
+                card.innerHTML = tableHtml;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderGroupView(group) {
+            activeGroup = group;
+            document.getElementById('active-group-title').textContent = `Group ${group} Standing`;
+            
+            const tabContainer = document.getElementById('mobile-group-tabs');
+            tabContainer.innerHTML = '';
+            GROUPS.forEach(g => {
+                const btn = document.createElement('button');
+                btn.className = `flex-shrink-0 px-6 py-2 rounded-full text-sm font-bold ${g === group ? 'bg-primary text-on-primary' : 'bg-surface-container text-on-surface-variant'}`;
+                btn.textContent = `Group ${g}`;
+                btn.onclick = () => renderGroupView(g);
+                tabContainer.appendChild(btn);
+            });
+
+            const body = document.getElementById('detailed-standings-body');
+            body.innerHTML = '';
+            
+            if (TEAMS[group]) {
+                const data = calculateStandings(group);
+                data.forEach((t, i) => {
+                    const row = document.createElement('tr');
+                    row.className = "border-b border-outline-variant/10 hover:bg-surface-container-low transition-colors";
+                    row.innerHTML = `
+                        <td class="px-4 py-3 font-label-caps text-on-surface-variant">${i+1}</td>
+                        <td class="px-4 py-3 flex items-center gap-3">
+                            <img src="${t.flag}" class="w-6 h-4 object-cover rounded-[2px]" />
+                            <span class="font-bold">${t.id}</span>
+                        </td>
+                        <td class="px-2 py-3 text-center">${t.mp}</td>
+                        <td class="px-2 py-3 text-center">${t.w}</td>
+                        <td class="px-2 py-3 text-center">${t.d}</td>
+                        <td class="px-2 py-3 text-center">${t.l}</td>
+                        <td class="px-2 py-3 text-center">${t.gf}</td>
+                        <td class="px-2 py-3 text-center">${t.ga}</td>
+                        <td class="px-2 py-3 text-center font-bold">${t.gd > 0 ? '+'+t.gd : t.gd}</td>
+                        <td class="px-4 py-3 text-right font-bold text-primary">${t.pts}</td>
+                    `;
+                    body.appendChild(row);
+                });
+            } else {
+                body.innerHTML = `<tr><td colspan="10" class="py-8 text-center text-on-surface-variant italic">No team data for Group ${group}</td></tr>`;
+            }
+
+            const fContainer = document.getElementById('fixtures-container');
+            fContainer.innerHTML = '';
+            const groupFixtures = FIXTURES[group] || [];
+            
+            if (groupFixtures.length === 0) {
+                fContainer.innerHTML = `<div class="p-8 text-center text-on-surface-variant italic">No fixtures currently available for Group ${group}</div>`;
+                document.getElementById('active-group-teams').textContent = "";
+            } else {
+                document.getElementById('active-group-teams').textContent = TEAMS[group].map(t => t.name).join(', ');
+                groupFixtures.forEach(m => {
+                    const homeTeam = TEAMS[group].find(t => t.id === m.home);
+                    const awayTeam = TEAMS[group].find(t => t.id === m.away);
+                    
+                    const card = document.createElement('article');
+                    card.className = "bg-surface-container-lowest border-l-4 border-primary border-y border-r border-outline-variant/30 p-4 rounded-lg flex flex-col gap-4 shadow-sm";
+                    card.innerHTML = `
+                        <div class="flex justify-between items-center border-b border-outline-variant/10 pb-2">
+                            <span class="font-label-caps text-[10px] text-on-surface-variant uppercase">${m.date} • ${m.location}</span>
+                            <span class="bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-bold">${m.hs !== null ? 'LIVE' : 'UPCOMING'}</span>
+                        </div>
+                        <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+                            <div class="flex items-center gap-3">
+                                <img src="${homeTeam.flag}" class="w-10 h-6 object-cover rounded-sm shadow-sm" />
+                                <span class="font-headline-md text-on-surface">${m.home}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input class="w-12 h-14 ${m.hs !== null ? 'bg-primary text-on-primary' : 'bg-surface-container'} text-center font-score-display text-score-display rounded-lg border-none focus:ring-2 focus:ring-primary focus:bg-primary-container focus:text-on-primary transition-all" 
+                                       type="number" value="${m.hs ?? ''}" placeholder="-" oninput="updateScore('${group}', ${m.id}, 'home', this.value)">
+                                <span class="text-on-surface-variant font-bold">vs</span>
+                                <input class="w-12 h-14 ${m.as !== null ? 'bg-primary text-on-primary' : 'bg-surface-container'} text-center font-score-display text-score-display rounded-lg border-none focus:ring-2 focus:ring-primary focus:bg-primary-container focus:text-on-primary transition-all" 
+                                       type="number" value="${m.as ?? ''}" placeholder="-" oninput="updateScore('${group}', ${m.id}, 'away', this.value)">
+                            </div>
+                            <div class="flex items-center justify-end gap-3">
+                                <span class="font-headline-md text-on-surface">${m.away}</span>
+                                <img src="${awayTeam.flag}" class="w-10 h-6 object-cover rounded-sm shadow-sm" />
+                            </div>
+                        </div>
+                    `;
+                    fContainer.appendChild(card);
+                });
+            }
+        }
+
+        function updateScore(group, matchId, side, val) {
+            const match = FIXTURES[group].find(m => m.id === matchId);
+            const score = val === "" ? null : parseInt(val);
+            if (side === 'home') match.hs = score;
+            else match.as = score;
+            
+            renderGroupView(group);
+        }
+
+        // Initialize
+        switchView('home');
+    </script>
+</body></html>
