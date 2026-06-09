@@ -23,6 +23,7 @@ import {
 	AlertDialogTrigger,
 } from "./ui/alert-dialog"
 import { setThemeServerFn } from "server/theme"
+import { capitalize } from "@/lib/utils"
 
 export default function Header() {
 	const { theme, session } = useRouteContext({ from: "__root__" })
@@ -82,8 +83,12 @@ export function DropdownMenuDemo({
 	return (
 		<DropdownMenu open={isUserMenuOpen} onOpenChange={setIsUserMenuOpen}>
 			<DropdownMenuTrigger asChild>
-				<Button variant="ghost" className="cursor-pointer">
-					Bienvenido {name}
+				<Button
+					variant="ghost"
+					className="cursor-pointer flex justify-center items-center gap-1"
+				>
+					<span className="hidden sm:block">Bienvenido</span>
+					<span> {capitalize(name)}</span>
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-40 p-4" align="end">

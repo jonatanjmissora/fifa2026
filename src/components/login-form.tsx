@@ -63,7 +63,7 @@ export function LoginForm({
 	})
 
 	const signIn = async () => {
-		toast.info("Funcionalidad de Google no implementada en el starter")
+		// toast.info("Funcionalidad de Google no implementada en el starter")
 		setLoading(true)
 
 		try {

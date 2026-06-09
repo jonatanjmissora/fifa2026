@@ -18,6 +18,14 @@ interface AuthOptions {
 	}
 	plugins: any[]
 	database?: any
+	// Add optional socialProviders for OAuth
+	socialProviders?: {
+		google?: {
+			clientId: string
+			clientSecret: string
+		}
+		// other providers can be added here
+	}
 }
 
 let authOptions: AuthOptions = {
@@ -26,6 +34,13 @@ let authOptions: AuthOptions = {
 		enabled: true,
 	},
 	plugins: [tanstackStartCookies()],
+	// Configure Google OAuth provider using env variables
+	socialProviders: {
+		google: {
+			clientId: process.env.GOOGLE_CLIENT_ID as string,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+		},
+	},
 }
 
 // Only add database configuration if DATABASE_URL is available

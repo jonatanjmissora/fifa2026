@@ -21,6 +21,40 @@ habilitamos las funciones para utilizar google client en login y register.
 seguimos el video para habilitar nuestra app en google console
 para obtener las variables de entorno
 
+correjimos el archivo de configuracion de auth.ts
+                interface AuthOptions {
+                        baseURL?: string
+                        emailAndPassword: {
+                                enabled: boolean
+                        }
+                        plugins: any[]
+                        database?: any
+                        // Add optional socialProviders for OAuth
+                        socialProviders?: {
+                                google?: {
+                                        clientId: string
+                                        clientSecret: string
+                                }
+                                // other providers can be added here
+                        }
+                }
+
+                let authOptions: AuthOptions = {
+                        baseURL,
+                        emailAndPassword: {
+                                enabled: true,
+                        },
+                        plugins: [tanstackStartCookies()],
+                        // Configure Google OAuth provider using env variables
+                        socialProviders: {
+                                google: {
+                                        clientId: process.env.GOOGLE_CLIENT_ID as string,
+                                        clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+                                },
+                        },
+                }
+
+
 falta desplegar en netlify
 
 MAIN BRANCH
