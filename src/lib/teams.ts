@@ -17,7 +17,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 1,
 		name: "México",
-		flag: "https://crests.football-data.org/769.svg",
+		flag: "/flags/769.svg",
 		letters: "MEX",
 		group: "A",
 		matches: [
@@ -29,7 +29,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 2,
 		name: "Sudáfrica",
-		flag: "https://crests.football-data.org/9396.svg",
+		flag: "/flags/9396.svg",
 		letters: "RSA",
 		group: "A",
 		matches: [
@@ -41,7 +41,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 3,
 		name: "Corea del Sur",
-		flag: "https://crests.football-data.org/772.png",
+		flag: "/flags/772.png",
 		letters: "KOR",
 		group: "A",
 		matches: [
@@ -53,7 +53,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 4,
 		name: "República Checa",
-		flag: "https://crests.football-data.org/798.svg",
+		flag: "/flags/798.svg",
 		letters: "CZE",
 		group: "A",
 		matches: [
@@ -65,7 +65,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 5,
 		name: "Canadá",
-		flag: "https://crests.football-data.org/canada.svg",
+		flag: "/flags/canada.svg",
 		letters: "CAN",
 		group: "B",
 		matches: [
@@ -77,7 +77,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 6,
 		name: "Bosnia y Herz.",
-		flag: "https://crests.football-data.org/bosnia.svg",
+		flag: "/flags/bosnia.svg",
 		letters: "BIH",
 		group: "B",
 		matches: [
@@ -89,7 +89,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 7,
 		name: "Catar",
-		flag: "https://crests.football-data.org/8030.svg",
+		flag: "/flags/8030.svg",
 		letters: "QAT",
 		group: "B",
 		matches: [
@@ -101,7 +101,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 8,
 		name: "Suiza",
-		flag: "https://crests.football-data.org/788.svg",
+		flag: "/flags/788.svg",
 		letters: "SUI",
 		group: "B",
 		matches: [
@@ -113,7 +113,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 9,
 		name: "Brasil",
-		flag: "https://crests.football-data.org/764.svg",
+		flag: "/flags/764.svg",
 		letters: "BRA",
 		group: "C",
 		matches: [
@@ -125,7 +125,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 10,
 		name: "Marruecos",
-		flag: "https://crests.football-data.org/morocco.svg",
+		flag: "/flags/morocco.svg",
 		letters: "MAR",
 		group: "C",
 		matches: [
@@ -137,7 +137,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 11,
 		name: "Haití",
-		flag: "https://crests.football-data.org/haiti.svg",
+		flag: "/flags/haiti.svg",
 		letters: "HAI",
 		group: "C",
 		matches: [
@@ -149,7 +149,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 12,
 		name: "Escocia",
-		flag: "https://crests.football-data.org/814.svg",
+		flag: "/flags/814.svg",
 		letters: "SCO",
 		group: "C",
 		matches: [
@@ -161,7 +161,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 13,
 		name: "Estados Unidos",
-		flag: "https://crests.football-data.org/usa.svg",
+		flag: "/flags/usa.svg",
 		letters: "USA",
 		group: "D",
 		matches: [
@@ -173,7 +173,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 14,
 		name: "Paraguay",
-		flag: "https://crests.football-data.org/761.svg",
+		flag: "/flags/761.svg",
 		letters: "PAR",
 		group: "D",
 		matches: [
@@ -185,7 +185,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 15,
 		name: "Australia",
-		flag: "https://crests.football-data.org/779.svg",
+		flag: "/flags/779.svg",
 		letters: "AUS",
 		group: "D",
 		matches: [
@@ -197,7 +197,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 16,
 		name: "Turquía",
-		flag: "https://crests.football-data.org/803.svg",
+		flag: "/flags/803.svg",
 		letters: "TUR",
 		group: "D",
 		matches: [
@@ -209,7 +209,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 17,
 		name: "Alemania",
-		flag: "https://crests.football-data.org/759.svg",
+		flag: "/flags/759.svg",
 		letters: "GER",
 		group: "E",
 		matches: [
@@ -221,7 +221,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 18,
 		name: "Curazao",
-		flag: "https://crests.football-data.org/curacao.svg",
+		flag: "/flags/curacao.svg",
 		letters: "CUW",
 		group: "E",
 		matches: [
@@ -233,7 +233,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 19,
 		name: "Costa de Marfil",
-		flag: "https://crests.football-data.org/787.svg",
+		flag: "/flags/787.svg",
 		letters: "CIV",
 		group: "E",
 		matches: [
@@ -245,7 +245,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 20,
 		name: "Ecuador",
-		flag: "https://crests.football-data.org/791.svg",
+		flag: "/flags/791.svg",
 		letters: "ECU",
 		group: "E",
 		matches: [
@@ -257,7 +257,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 21,
 		name: "Países Bajos",
-		flag: "https://crests.football-data.org/8601.svg",
+		flag: "/flags/8601.svg",
 		letters: "NED",
 		group: "F",
 		matches: [
@@ -269,7 +269,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 22,
 		name: "Japón",
-		flag: "https://crests.football-data.org/766.svg",
+		flag: "/flags/766.svg",
 		letters: "JPN",
 		group: "F",
 		matches: [
@@ -281,7 +281,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 23,
 		name: "Suecia",
-		flag: "https://crests.football-data.org/792.svg",
+		flag: "/flags/792.svg",
 		letters: "SWE",
 		group: "F",
 		matches: [
@@ -293,7 +293,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 24,
 		name: "Túnez",
-		flag: "https://crests.football-data.org/tunisia.svg",
+		flag: "/flags/tunisia.svg",
 		letters: "TUN",
 		group: "F",
 		matches: [
@@ -305,7 +305,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 25,
 		name: "Bélgica",
-		flag: "https://crests.football-data.org/805.svg",
+		flag: "/flags/805.svg",
 		letters: "BEL",
 		group: "G",
 		matches: [
@@ -317,7 +317,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 26,
 		name: "Egipto",
-		flag: "https://crests.football-data.org/825.svg",
+		flag: "/flags/825.svg",
 		letters: "EGY",
 		group: "G",
 		matches: [
@@ -329,7 +329,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 27,
 		name: "Irán",
-		flag: "https://crests.football-data.org/iran.svg",
+		flag: "/flags/iran.svg",
 		letters: "IRN",
 		group: "G",
 		matches: [
@@ -341,7 +341,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 28,
 		name: "Nueva Zelanda",
-		flag: "https://crests.football-data.org/783.svg",
+		flag: "/flags/783.svg",
 		letters: "NZL",
 		group: "G",
 		matches: [
@@ -353,7 +353,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 29,
 		name: "España",
-		flag: "https://crests.football-data.org/760.svg",
+		flag: "/flags/760.svg",
 		letters: "ESP",
 		group: "H",
 		matches: [
@@ -365,7 +365,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 30,
 		name: "Cabo Verde",
-		flag: "https://crests.football-data.org/cape_verde.svg",
+		flag: "/flags/cape_verde.svg",
 		letters: "CPV",
 		group: "H",
 		matches: [
@@ -377,7 +377,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 31,
 		name: "Arabia Saudí",
-		flag: "https://crests.football-data.org/saudi_arabia.svg",
+		flag: "/flags/saudi_arabia.svg",
 		letters: "KSA",
 		group: "H",
 		matches: [
@@ -389,7 +389,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 32,
 		name: "Uruguay",
-		flag: "https://crests.football-data.org/758.svg",
+		flag: "/flags/758.svg",
 		letters: "URY",
 		group: "H",
 		matches: [
@@ -401,7 +401,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 33,
 		name: "Francia",
-		flag: "https://crests.football-data.org/773.svg",
+		flag: "/flags/773.svg",
 		letters: "FRA",
 		group: "I",
 		matches: [
@@ -413,7 +413,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 34,
 		name: "Senegal",
-		flag: "https://crests.football-data.org/senegal.svg",
+		flag: "/flags/senegal.svg",
 		letters: "SEN",
 		group: "I",
 		matches: [
@@ -425,7 +425,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 35,
 		name: "Irak",
-		flag: "https://crests.football-data.org/iraq.svg",
+		flag: "/flags/iraq.svg",
 		letters: "IRQ",
 		group: "I",
 		matches: [
@@ -437,7 +437,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 36,
 		name: "Noruega",
-		flag: "https://crests.football-data.org/813.svg",
+		flag: "/flags/813.svg",
 		letters: "NOR",
 		group: "I",
 		matches: [
@@ -449,7 +449,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 37,
 		name: "Argentina",
-		flag: "https://crests.football-data.org/762.png",
+		flag: "/flags/762.png",
 		letters: "ARG",
 		group: "J",
 		matches: [
@@ -461,7 +461,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 38,
 		name: "Argelia",
-		flag: "https://crests.football-data.org/algeria.svg",
+		flag: "/flags/algeria.svg",
 		letters: "ALG",
 		group: "J",
 		matches: [
@@ -473,7 +473,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 39,
 		name: "Austria",
-		flag: "https://crests.football-data.org/816.svg",
+		flag: "/flags/816.svg",
 		letters: "AUT",
 		group: "J",
 		matches: [
@@ -485,7 +485,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 40,
 		name: "Jordania",
-		flag: "https://crests.football-data.org/8049.png",
+		flag: "/flags/8049.png",
 		letters: "JOR",
 		group: "J",
 		matches: [
@@ -497,7 +497,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 41,
 		name: "Portugal",
-		flag: "https://crests.football-data.org/765.svg",
+		flag: "/flags/765.svg",
 		letters: "POR",
 		group: "K",
 		matches: [
@@ -509,7 +509,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 42,
 		name: "RD de Congo",
-		flag: "https://crests.football-data.org/congo_dr.svg",
+		flag: "/flags/congo_dr.svg",
 		letters: "COD",
 		group: "K",
 		matches: [
@@ -521,7 +521,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 43,
 		name: "Uzbekistán",
-		flag: "https://crests.football-data.org/8070.png",
+		flag: "/flags/8070.png",
 		letters: "UZB",
 		group: "K",
 		matches: [
@@ -533,7 +533,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 44,
 		name: "Colombia",
-		flag: "https://crests.football-data.org/818.svg",
+		flag: "/flags/818.svg",
 		letters: "COL",
 		group: "K",
 		matches: [
@@ -545,7 +545,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 45,
 		name: "Inglaterra",
-		flag: "https://crests.football-data.org/770.svg",
+		flag: "/flags/770.svg",
 		letters: "ENG",
 		group: "L",
 		matches: [
@@ -557,7 +557,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 46,
 		name: "Croacia",
-		flag: "https://crests.football-data.org/799.svg",
+		flag: "/flags/799.svg",
 		letters: "CRO",
 		group: "L",
 		matches: [
@@ -569,7 +569,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 47,
 		name: "Ghana",
-		flag: "https://crests.football-data.org/ghana.svg",
+		flag: "/flags/ghana.svg",
 		letters: "GHA",
 		group: "L",
 		matches: [
@@ -581,7 +581,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 48,
 		name: "Panamá",
-		flag: "https://crests.football-data.org/panama.svg",
+		flag: "/flags/panama.svg",
 		letters: "PAN",
 		group: "L",
 		matches: [

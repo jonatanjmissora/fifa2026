@@ -4,13 +4,17 @@ import { GROUPS, TEAMS, FIXTURES, type GroupId } from "@/lib/data"
 import { calculateStandings, type Standing } from "@/lib/standings"
 import { StandingsTable } from "@/components/groups/standings-table"
 import { FixtureCard } from "@/components/groups/fixture-card"
+import { ChevronRight } from "lucide-react"
 
-export const Route = createFileRoute("/_protected/groups")({
-	component: GroupsPage,
+export const Route = createFileRoute("/_protected/groups/$groupId/")({
+	component: RouteComponent,
 })
 
-function GroupsPage() {
-	const [activeGroup, setActiveGroup] = useState<GroupId>(GROUPS[0])
+function RouteComponent() {
+	const { groupId } = Route.useParams()
+	const [activeGroup, setActiveGroup] = useState<GroupId>(() =>
+		GROUPS.includes(groupId as GroupId) ? (groupId as GroupId) : GROUPS[0]
+	)
 	const [fixtures, setFixtures] = useState(() => {
 		const cloned: Record<GroupId, (typeof FIXTURES)[GroupId]> =
 			structuredClone(FIXTURES)
@@ -43,53 +47,32 @@ function GroupsPage() {
 	}
 
 	return (
-		<main className="max-w-container-max mx-auto flex flex-col lg:flex-row bg-background text-on-surface pb-24 lg:pb-0">
-			{/* Sidebar - desktop */}
-			<aside className="h-screen w-64 hidden lg:flex flex-col border-r border-outline-variant/30 bg-surface-container-low p-4 sticky top-0">
-				<h2 className="font-headline-md text-primary mb-4">Grupos</h2>
-				<nav className="flex flex-col gap-1 overflow-y-auto hide-scrollbar">
-					{GROUPS.map(g => {
-						const isActive = g === activeGroup
-						return (
-							<button
-								key={g}
-								type="button"
-								className={`flex items-center gap-3 p-3 rounded-lg transition cursor-pointer ${
-									isActive
-										? "bg-primary text-on-primary font-bold"
-										: "text-on-surface hover:bg-surface-container-high"
-								}`}
-								onClick={() => setActiveGroup(g)}
-							>
-								<span className="font-label-caps">Group {g}</span>
-							</button>
-						)
-					})}
-				</nav>
-			</aside>
-
+		<main className="w-full mx-auto flex flex-col text-on-surface mb-24 lg:pb-0">
 			{/* Main content */}
-			<section className="flex-1 px-margin-mobile md:px-margin-desktop py-6">
+			<section className="flex-1 py-6">
 				{/* Mobile group tabs */}
-				<div className="lg:hidden mb-6">
-					<div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
-						{GROUPS.map(g => {
-							const isActive = g === activeGroup
-							return (
-								<button
-									key={g}
-									type="button"
-									className={`flex-shrink-0 px-6 py-2 rounded-full text-sm font-bold cursor-pointer ${
-										isActive
-											? "bg-primary text-on-primary"
-											: "bg-surface-container text-on-surface-variant"
-									}`}
-									onClick={() => setActiveGroup(g)}
-								>
-									Group {g}
-								</button>
-							)
-						})}
+				<div className="mb-6">
+					<div className="relative">
+						<div className="flex gap-2 overflow-x-auto hide-scrollbar card p-0">
+							<ChevronRight className="absolute -right-5 -top-1 opacity-20 w-7 h-14 p-0" />
+							{GROUPS.map(g => {
+								const isActive = g === activeGroup
+								return (
+									<button
+										key={g}
+										type="button"
+										className={`shrink-0 px-6 py-2 rounded-lg font-bold text-xl cursor-pointer w-[calc(100%/12)] text-center flex items-center justify-center ${
+											isActive
+												? "bg-gray-500 text-on-primary"
+												: "bg-surface-container text-on-surface-variant"
+										}`}
+										onClick={() => setActiveGroup(g)}
+									>
+										{g}
+									</button>
+								)
+							})}
+						</div>
 					</div>
 				</div>
 
@@ -99,10 +82,7 @@ function GroupsPage() {
 					<div>
 						<div className="flex justify-between items-end mb-4">
 							<div>
-								<h2 className="font-headline-md text-primary">Fixtures</h2>
-								<p className="font-body-md text-on-surface-variant">
-									{groupTeams.map(t => t.name).join(", ")}
-								</p>
+								<h2 className="font-headline-md text-primary">Partidos</h2>
 							</div>
 						</div>
 						<div className="grid grid-cols-1 gap-4">

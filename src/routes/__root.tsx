@@ -65,7 +65,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="w-screen overflow-x-hidden flex flex-col min-h-screen">
+			<body className="w-screen px-6 sm:px-[20svw] overflow-x-hidden flex flex-col min-h-screen">
 				<Header />
 				{children}
 				<Toaster />

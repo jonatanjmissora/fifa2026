@@ -8,11 +8,9 @@ export const Route = createFileRoute("/_protected/")({
 })
 
 function App() {
-	const navigate = useNavigate()
-
 	return (
-		<main className="max-w-container-max flex-1 bg-background text-on-surface pb-24 lg:pb-0">
-			<section className="px-margin-mobile md:px-margin-desktop py-6">
+		<main className="flex-1 text-on-surface mb-24 lg:pb-0">
+			<section className="py-6">
 				<h2 className="font-headline-md md:font-headline-lg text-primary mb-6">
 					FASE de GRUPOS
 				</h2>
@@ -22,14 +20,7 @@ function App() {
 						const data = hasData
 							? calculateStandings(TEAMS[g], FIXTURES[g])
 							: null
-						return (
-							<GroupOverviewCard
-								key={g}
-								groupId={g}
-								standings={data}
-								onClick={() => navigate({ to: "/groups" })}
-							/>
-						)
+						return <GroupOverviewCard key={g} groupId={g} standings={data} />
 					})}
 				</div>
 			</section>

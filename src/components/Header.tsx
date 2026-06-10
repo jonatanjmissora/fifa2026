@@ -38,19 +38,22 @@ export default function Header() {
 	}
 
 	return (
-		<header className="py-8 w-[90%] 2xl:w-[80%] mx-auto">
-			<nav className="flex items-center justify-between">
+		<header className="py-4 w-full">
+			<nav className="flex items-center justify-between w-full">
 				<Link to="/" className="text-xl font-semibold flex gap-2 items-center">
-					<img src="/fifa2026-logo.png" alt="FIFA 26" className="size-10" />
 					<span className="text-2xl font-bold">FIFA 26</span>
 				</Link>
 
+				{/* <img src="/logo.png" alt="FIFA 26" className="h-auto w-1/3" /> */}
+
 				{session ? (
-					<DropdownMenuDemo
-						name={session.user?.name}
-						theme={theme}
-						toggleTheme={toggleTheme}
-					/>
+					<div className="">
+						<DropdownMenuDemo
+							name={session.user?.name}
+							theme={theme}
+							toggleTheme={toggleTheme}
+						/>
+					</div>
 				) : (
 					<div className="flex items-center gap-4">
 						<button className="cursor-pointer" onClick={toggleTheme}>
@@ -85,7 +88,7 @@ export function DropdownMenuDemo({
 			<DropdownMenuTrigger asChild>
 				<Button
 					variant="ghost"
-					className="cursor-pointer flex justify-center items-center gap-1"
+					className="text-lg cursor-pointer flex justify-end items-center gap-1 px-0"
 				>
 					<span className="hidden sm:block">Bienvenido</span>
 					<span> {capitalize(name)}</span>
