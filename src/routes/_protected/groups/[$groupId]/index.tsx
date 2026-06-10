@@ -1,16 +1,20 @@
 import { useState, useMemo } from "react"
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { GROUPS, TEAMS, FIXTURES, type GroupId } from "@/lib/data"
+import { PREDICTIONS } from "@/lib/predictions"
 import { calculateStandings, type Standing } from "@/lib/standings"
 import { StandingsTable } from "@/components/groups/standings-table"
 import { FixtureCard } from "@/components/groups/fixture-card"
 import { ChevronRight } from "lucide-react"
+import useScrollTop from "@/lib/scroll-top"
 
 export const Route = createFileRoute("/_protected/groups/$groupId/")({
 	component: RouteComponent,
 })
 
 function RouteComponent() {
+	useScrollTop()
+	const navigate = useNavigate()
 	const { groupId } = Route.useParams()
 	const [activeGroup, setActiveGroup] = useState<GroupId>(() =>
 		GROUPS.includes(groupId as GroupId) ? (groupId as GroupId) : GROUPS[0]
@@ -18,6 +22,15 @@ function RouteComponent() {
 	const [fixtures, setFixtures] = useState(() => {
 		const cloned: Record<GroupId, (typeof FIXTURES)[GroupId]> =
 			structuredClone(FIXTURES)
+		for (const g of GROUPS) {
+			for (const f of cloned[g]) {
+				const pred = PREDICTIONS[f.id]
+				if (pred) {
+					f.hs = pred.hs
+					f.as = pred.as
+				}
+			}
+		}
 		return cloned
 	})
 
@@ -66,7 +79,15 @@ function RouteComponent() {
 												? "bg-gray-500 text-on-primary"
 												: "bg-surface-container text-on-surface-variant"
 										}`}
-										onClick={() => setActiveGroup(g)}
+										onClick={() => {
+											setActiveGroup(g)
+											navigate({
+												to: `/groups/$groupId`,
+												params: {
+													groupId: g,
+												},
+											})
+										}}
 									>
 										{g}
 									</button>
