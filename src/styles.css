@@ -211,6 +211,12 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Custom spacing */
+  --spacing-gutter: 16px;
+  --spacing-margin-desktop: 32px;
+  --spacing-container-max: 1200px;
+  --spacing-margin-mobile: 16px;
 }
 
 /* ============================================
@@ -263,6 +269,50 @@ html {
    ANIMATIONS
    ============================================ */
    
+/* ============================================
+   CUSTOM FONT UTILITIES
+   ============================================ */
+@layer utilities {
+  .font-headline-lg {
+    font-family: 'Anybody', sans-serif;
+    font-size: clamp(24px, 1.5rem + 0.3vw, 32px);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+  .font-headline-md {
+    font-family: 'Anybody', sans-serif;
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+  .font-score-display {
+    font-family: 'Anybody', sans-serif;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 800;
+  }
+  .font-body-md {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  .font-label-caps {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
 html:active-view-transition-type(rotateZ) {
   &::view-transition-old(section-container) {
     animation: 0.5s both rotate-out;

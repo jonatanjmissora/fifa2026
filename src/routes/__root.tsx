@@ -42,6 +42,10 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 				rel: "stylesheet",
 				href: appCss,
 			},
+			{
+				rel: "stylesheet",
+				href: "https://fonts.googleapis.com/css2?family=Anybody:wght@400;600;700;800&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@600&display=swap",
+			},
 		],
 	}),
 	beforeLoad: async () => ({
