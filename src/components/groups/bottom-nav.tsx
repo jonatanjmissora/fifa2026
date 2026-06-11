@@ -24,7 +24,7 @@ export function BottomNav({ activeView, onViewChange }: BottomNavProps) {
 						key={item.id}
 						type="button"
 						className={`flex flex-col items-center justify-center cursor-pointer ${
-							isActive ? "text-primary" : "text-on-surface-variant"
+							isActive ? "text-foreground" : "text-on-surface-variant"
 						}`}
 						onClick={() => onViewChange(item.id)}
 					>

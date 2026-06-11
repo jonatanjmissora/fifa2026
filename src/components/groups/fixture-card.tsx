@@ -10,6 +10,7 @@ type FixtureCardProps = {
 		side: "home" | "away",
 		value: string
 	) => void
+	showDate?: boolean
 }
 
 export function FixtureCard({
@@ -17,6 +18,7 @@ export function FixtureCard({
 	homeTeam,
 	awayTeam,
 	onScoreChange,
+	showDate = true,
 }: FixtureCardProps) {
 	const date = fixture.date.split(" ")[0]
 	const time = fixture.date.split(" ")[1]
@@ -25,14 +27,14 @@ export function FixtureCard({
 		<article className="card flex flex-col sm:flex-row gap-4">
 			<div className="flex justify-between items-center ">
 				<div className="hidden sm:flex font-mono text-base sm:text-xl gap-6 items-center w-full">
-					<span>{date}</span>
+					{showDate && <span>{date}</span>}
 					<span className="flex gap-1 items-center text-amber-600">
 						<Clock size={16} />
 						{time}
 					</span>
 				</div>
 				<div className="sm:hidden font-mono text-base sm:text-xl flex justify-between items-center w-full mb-3">
-					<span>{date}</span>
+					{showDate && <span>{date}</span>}
 					<span className="flex gap-1 items-center text-amber-600">
 						<Clock size={16} />
 						{time}

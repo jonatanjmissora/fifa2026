@@ -18,9 +18,7 @@ export function GroupOverviewCard({
 			className="card cursor-pointer hover:shadow-md transition-shadow text-left w-full"
 		>
 			<div className="flex justify-between items-center">
-				<h3 className="font-headline-md text-primary">
-					{groupId.toUpperCase()}
-				</h3>
+				<h3 className="font-headline-md">{groupId.toUpperCase()}</h3>
 			</div>
 			{standings ? (
 				<div className="w-full text-sm tracking-wider">
@@ -54,7 +52,7 @@ export function GroupOverviewCard({
 									<span className="text-center">
 										{t.gd > 0 ? `+${t.gd}` : t.gd}
 									</span>
-									<span className="text-center font-bold text-primary">
+									<span className="text-center font-bold text-foreground">
 										{t.pts}
 									</span>
 								</div>

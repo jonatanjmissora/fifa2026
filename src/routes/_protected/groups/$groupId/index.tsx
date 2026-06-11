@@ -1,21 +1,37 @@
-import { useState, useMemo } from "react"
+import { Suspense, useState, useMemo } from "react"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { GROUPS, TEAMS, FIXTURES, type GroupId } from "@/lib/data"
-import { PREDICTIONS } from "@/lib/predictions"
 import { calculateStandings, type Standing } from "@/lib/standings"
 import { StandingsTable } from "@/components/groups/standings-table"
 import { FixtureCard } from "@/components/groups/fixture-card"
+import { LoadingGroups } from "@/components/loading-results"
 import { ChevronRight } from "lucide-react"
 import useScrollTop from "@/lib/scroll-top"
+import { resultsQueryOptions } from "queries/results/results-query"
 
 export const Route = createFileRoute("/_protected/groups/$groupId/")({
+	pendingComponent: LoadingGroups,
+	loader: ({ context }) =>
+		context.queryClient.ensureQueryData(resultsQueryOptions),
 	component: RouteComponent,
 })
 
 function RouteComponent() {
+	return (
+		<Suspense fallback={<LoadingGroups />}>
+			<GroupsRoute />
+		</Suspense>
+	)
+}
+
+function GroupsRoute() {
 	useScrollTop()
 	const navigate = useNavigate()
 	const { groupId } = Route.useParams()
+	const { data: resultsData } = useSuspenseQuery(resultsQueryOptions)
+	const predictions = resultsData[0]?.data ?? {}
+
 	const [activeGroup, setActiveGroup] = useState<GroupId>(() =>
 		GROUPS.includes(groupId as GroupId) ? (groupId as GroupId) : GROUPS[0]
 	)
@@ -24,7 +40,7 @@ function RouteComponent() {
 			structuredClone(FIXTURES)
 		for (const g of GROUPS) {
 			for (const f of cloned[g]) {
-				const pred = PREDICTIONS[f.id]
+				const pred = predictions[f.id]
 				if (pred) {
 					f.hs = pred.hs
 					f.as = pred.as
@@ -61,9 +77,7 @@ function RouteComponent() {
 
 	return (
 		<main className="w-full mx-auto flex flex-col text-on-surface mb-24 lg:pb-0">
-			{/* Main content */}
 			<section className="flex-1 py-6">
-				{/* Mobile group tabs */}
 				<div className="mb-6">
 					<div className="relative">
 						<div className="flex gap-2 overflow-x-auto hide-scrollbar card p-0">
@@ -82,7 +96,7 @@ function RouteComponent() {
 										onClick={() => {
 											setActiveGroup(g)
 											navigate({
-												to: `/groups/$groupId`,
+												to: "/groups/$groupId",
 												params: {
 													groupId: g,
 												},
@@ -103,7 +117,7 @@ function RouteComponent() {
 					<div>
 						<div className="flex justify-between items-end mb-4">
 							<div>
-								<h2 className="font-headline-md text-primary">Partidos</h2>
+								<h2 className="font-headline-md text-foreground">Partidos</h2>
 							</div>
 						</div>
 						<div className="grid grid-cols-1 gap-4">

@@ -119,7 +119,7 @@
 <!-- TopNavBar -->
 <header class="bg-surface/80 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/30 px-margin-mobile py-4 w-full">
 <div class="flex justify-between items-center max-w-container-max mx-auto">
-<h1 class="font-display-lg text-headline-md tracking-tighter text-primary">2026 WORLD CUP PREDICTOR</h1>
+<h1 class="font-display-lg text-headline-md tracking-tighter text-foreground">2026 WORLD CUP PREDICTOR</h1>
 <div class="flex items-center gap-4">
 <span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
 <span class="material-symbols-outlined text-on-surface-variant cursor-pointer">person</span>
@@ -130,7 +130,7 @@
 <!-- SideNavBar (Desktop Only) -->
 <aside class="h-screen w-64 hidden lg:flex flex-col border-r border-outline-variant/30 sticky top-[73px] bg-surface-container-low p-4">
 <div class="mb-6 px-2">
-<h2 class="font-headline-md text-primary">Tournament</h2>
+<h2 class="font-headline-md text-foreground">Tournament</h2>
 </div>
 <nav class="flex flex-col gap-1 overflow-y-auto hide-scrollbar">
 <button class="flex items-center gap-3 p-3 text-on-surface hover:bg-surface-container-high rounded-lg transition-all" id="side-nav-home" onclick="switchView('home')">
@@ -154,7 +154,7 @@
 <section class="flex-1 px-margin-mobile md:px-margin-desktop py-6">
 <!-- View: Home / Standings Overview -->
 <div class="active" data-view="" id="view-home">
-<h2 class="font-headline-lg-mobile md:font-headline-lg text-primary mb-6">Group Standings Overview</h2>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-foreground mb-6">Group Standings Overview</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="overview-grid">
 <!-- Dynamic Group Cards (A-L) will be injected here -->
 </div>
@@ -187,7 +187,7 @@
 <th class="px-2 py-3 text-center">GF</th>
 <th class="px-2 py-3 text-center">GA</th>
 <th class="px-2 py-3 text-center font-bold">DIF</th>
-<th class="px-4 py-3 text-right font-bold text-primary">PTS</th>
+<th class="px-4 py-3 text-right font-bold text-foreground">PTS</th>
 </tr>
 </thead>
 <tbody id="detailed-standings-body">
@@ -200,7 +200,7 @@
 <div>
 <div class="flex justify-between items-end mb-4">
 <div>
-<h2 class="font-headline-md text-primary">Fixtures</h2>
+<h2 class="font-headline-md text-foreground">Fixtures</h2>
 <p class="font-body-md text-on-surface-variant" id="active-group-teams"></p>
 </div>
 <button class="hidden lg:flex items-center gap-2 px-6 py-2 bg-primary text-on-primary font-bold rounded-full transition-transform active:scale-95">
@@ -216,7 +216,7 @@
 </div>
 <!-- View: Full Table (Placeholder) -->
 <div data-view="" id="view-table">
-<h2 class="font-headline-lg-mobile md:font-headline-lg text-primary mb-6">Tournament Progress</h2>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-foreground mb-6">Tournament Progress</h2>
 <div class="p-12 bg-surface-container border border-dashed border-outline rounded-xl text-center">
 <span class="material-symbols-outlined text-4xl text-on-surface-variant mb-4">analytics</span>
 <p class="font-headline-md text-on-surface-variant">Global Rankings &amp; Comparison</p>
@@ -294,11 +294,11 @@
                 const mobBtn = document.getElementById(`mob-nav-${id}`);
                 const sideBtn = document.getElementById(`side-nav-${id}`);
                 if (id === viewId) {
-                    mobBtn?.classList.add('text-primary');
+                    mobBtn?.classList.add('text-foreground');
                     mobBtn?.classList.remove('text-on-surface-variant');
                     sideBtn?.classList.add('bg-primary-container', 'text-on-primary-container', 'font-bold');
                 } else {
-                    mobBtn?.classList.remove('text-primary');
+                    mobBtn?.classList.remove('text-foreground');
                     mobBtn?.classList.add('text-on-surface-variant');
                     sideBtn?.classList.remove('bg-primary-container', 'text-on-primary-container', 'font-bold');
                 }
@@ -349,7 +349,7 @@
                 card.onclick = () => { activeGroup = g; switchView('groups'); };
                 
                 let tableHtml = `<div class="flex justify-between items-center mb-3">
-                                    <h3 class="font-headline-md text-primary">Group ${g}</h3>
+                                    <h3 class="font-headline-md text-foreground">Group ${g}</h3>
                                     <span class="material-symbols-outlined text-sm text-on-surface-variant">arrow_forward</span>
                                  </div>`;
                 
@@ -373,7 +373,7 @@
                             <td class="text-center">${t.w}</td>
                             <td class="text-center">${t.d}</td>
                             <td class="text-center">${t.gd > 0 ? '+' + t.gd : t.gd}</td>
-                            <td class="text-right font-bold text-primary">${t.pts}</td>
+                            <td class="text-right font-bold text-foreground">${t.pts}</td>
                         </tr>`;
                     });
                     tableHtml += `</tbody></table>`;
@@ -421,7 +421,7 @@
                         <td class="px-2 py-3 text-center">${t.gf}</td>
                         <td class="px-2 py-3 text-center">${t.ga}</td>
                         <td class="px-2 py-3 text-center font-bold">${t.gd > 0 ? '+'+t.gd : t.gd}</td>
-                        <td class="px-4 py-3 text-right font-bold text-primary">${t.pts}</td>
+                        <td class="px-4 py-3 text-right font-bold text-foreground">${t.pts}</td>
                     `;
                     body.appendChild(row);
                 });

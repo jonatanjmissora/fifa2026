@@ -7,9 +7,7 @@ type StandingsTableProps = {
 export function StandingsTable({ standings }: StandingsTableProps) {
 	return (
 		<div className="card overflow-hidden">
-			<div className="text-on-primary font-headline-md flex justify-between items-center">
-				<span>Tabla</span>
-			</div>
+			<div className="text-on-primary font-headline-md flex justify-between items-center"></div>
 			<div className="overflow-x-auto">
 				<div className="w-full text-sm tracking-wider">
 					<div className="text-on-surface-variant/60 border-b-[0.25px] border-foreground/50 font-label-caps w-full flex">
@@ -42,7 +40,7 @@ export function StandingsTable({ standings }: StandingsTableProps) {
 									<span className="text-center">
 										{t.gd > 0 ? `+${t.gd}` : t.gd}
 									</span>
-									<span className="text-center font-bold text-primary">
+									<span className="text-center font-bold text-foreground">
 										{t.pts}
 									</span>
 								</div>
