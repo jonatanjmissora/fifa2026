@@ -246,6 +246,7 @@ code {
   body {
     @apply text-foreground;
   }
+  
   .card {
     @apply bg-(--card-background)/85 ring ring-foreground/20 p-4 rounded-lg;
   }

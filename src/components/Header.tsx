@@ -1,10 +1,5 @@
-import {
-	Link,
-	useNavigate,
-	useRouteContext,
-	useRouter,
-} from "@tanstack/react-router"
-import { LogOut, Monitor, Moon, Sun } from "lucide-react"
+import { Link, useNavigate, useRouteContext } from "@tanstack/react-router"
+import { LogOut } from "lucide-react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
@@ -22,20 +17,10 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "./ui/alert-dialog"
-import { setThemeServerFn } from "server/theme"
 import { capitalize } from "@/lib/utils"
 
 export default function Header() {
-	const { theme, session } = useRouteContext({ from: "__root__" })
-	const router = useRouter()
-
-	const toggleTheme = () => {
-		const themes = ["light", "dark", "auto"] as const
-		const nextTheme = themes[(themes.indexOf(theme) + 1) % themes.length]
-		setThemeServerFn({ data: nextTheme }).then(() => {
-			router.invalidate()
-		})
-	}
+	const { session } = useRouteContext({ from: "__root__" })
 
 	return (
 		<header className="py-4 w-full">
@@ -44,43 +29,17 @@ export default function Header() {
 					<span className="text-2xl font-bold">FIFA 26</span>
 				</Link>
 
-				{/* <img src="/logo.png" alt="FIFA 26" className="h-auto w-1/3" /> */}
-
 				{session ? (
 					<div className="">
-						<DropdownMenuDemo
-							name={session.user?.name}
-							theme={theme}
-							toggleTheme={toggleTheme}
-						/>
+						<DropdownMenuDemo name={session.user?.name} />
 					</div>
-				) : (
-					<div className="flex items-center gap-4">
-						<button className="cursor-pointer" onClick={toggleTheme}>
-							{theme === "dark" ? (
-								<Moon size={20} />
-							) : theme === "light" ? (
-								<Sun size={20} />
-							) : (
-								<Monitor size={20} />
-							)}
-						</button>
-					</div>
-				)}
+				) : null}
 			</nav>
 		</header>
 	)
 }
 
-export function DropdownMenuDemo({
-	name,
-	theme,
-	toggleTheme,
-}: {
-	name: string
-	theme: "light" | "dark" | "auto"
-	toggleTheme: () => void
-}) {
+export function DropdownMenuDemo({ name }: { name: string }) {
 	const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
 
 	return (
@@ -98,20 +57,6 @@ export function DropdownMenuDemo({
 				<DropdownMenuGroup>
 					<LogoutAlertDialog setUserMenuOpen={setIsUserMenuOpen} />
 					<DropdownMenuSeparator />
-
-					<button
-						onClick={toggleTheme}
-						className="w-[75%] m-4 hover:bg-accent p-2 rounded-sm flex items-center justify-end gap-2 text-sm cursor-pointer"
-					>
-						Aspecto{" "}
-						{theme === "dark" ? (
-							<Moon size={14} className="text-muted-foreground" />
-						) : theme === "light" ? (
-							<Sun size={14} className="text-muted-foreground" />
-						) : (
-							<Monitor size={14} className="text-muted-foreground" />
-						)}
-					</button>
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
@@ -129,7 +74,6 @@ export function LogoutAlertDialog({
 		await authClient.signOut({
 			fetchOptions: {
 				onSuccess: () => {
-					// Redirect to home page after successful logout
 					navigate({ to: "/login" })
 					setUserMenuOpen(false)
 				},

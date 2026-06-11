@@ -15,12 +15,10 @@ import { Session } from "better-auth"
 import { DefaultCatchBoundary } from "@/components/DefaultCatchBoundary"
 import { NotFound } from "@/components/NotFound"
 import { getSession } from "server/get-session"
-import { getThemeServerFn } from "server/theme"
 
 export type RouterContext = {
 	session: Session | null
 	queryClient: QueryClient
-	theme: "light" | "dark" | "auto"
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
@@ -34,7 +32,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				title: "TanStack Start Starter",
+				title: "Fifa 26",
 			},
 		],
 		links: [
@@ -49,7 +47,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 		],
 	}),
 	beforeLoad: async () => ({
-		theme: ((await getThemeServerFn()) ?? "auto") as "light" | "dark" | "auto",
 		session: await getSession(),
 	}),
 	shellComponent: RootDocument,
@@ -58,14 +55,12 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-	const { theme } = Route.useRouteContext()
-
 	return (
-		<html lang="en" className={theme}>
+		<html lang="en" className="dark px-6 sm:px-[20svw] overflow-x-hidden overflow-y-scroll">
 			<head>
 				<HeadContent />
 			</head>
-			<body className="w-screen px-6 sm:px-[20svw] overflow-x-hidden flex flex-col min-h-screen">
+			<body className="w-full flex flex-col min-h-screen relative mx-auto">
 				<Header />
 				{children}
 				<Toaster />
