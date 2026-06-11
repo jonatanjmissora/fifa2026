@@ -1,8 +1,12 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, Suspense } from "react"
 import { createFileRoute } from "@tanstack/react-router"
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { PARTICIPANTES } from "@/lib/predictions"
 import { FIXTURES, GROUPS, TEAMS } from "@/lib/data"
 import { FixtureCard } from "@/components/groups/fixture-card"
+import { LoadingResults } from "@/components/loading-results"
+import { resultsQueryOptions } from "queries/results/results-query"
+import { Star } from "lucide-react"
 
 const DAY_NAMES = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]
 const MONTH_NAMES = [
@@ -43,13 +47,69 @@ function todayStr() {
 	return `${y}/${m}/${day}`
 }
 
+function matchPoints(
+	adminResult: { hs: number; as: number } | null | undefined,
+	pred: { hs: number; as: number } | null | undefined
+): 0 | 1 | 2 {
+	if (!adminResult || !pred) return 0
+
+	if (pred.hs === adminResult.hs && pred.as === adminResult.as) return 2
+
+	const adminDiff = adminResult.hs - adminResult.as
+	const predDiff = pred.hs - pred.as
+	const sameWinner =
+		(adminDiff > 0 && predDiff > 0) ||
+		(adminDiff < 0 && predDiff < 0) ||
+		(adminDiff === 0 && predDiff === 0)
+
+	return sameWinner ? 1 : 0
+}
+
+function calcScore(
+	admin: Record<number, { hs: number; as: number } | null>,
+	participant: Record<number, { hs: number; as: number } | null>
+) {
+	let prode = 0
+	let exacto = 0
+
+	for (const [key, adminResult] of Object.entries(admin)) {
+		if (!adminResult) continue
+		const pts = matchPoints(adminResult, participant[Number(key)])
+		if (pts === 2) exacto++
+		else if (pts === 1) prode++
+	}
+
+	return { prode, exacto, total: prode + exacto * 2 }
+}
+
 export const Route = createFileRoute("/_protected/participantes/")({
+	pendingComponent: LoadingResults,
+	loader: ({ context }) =>
+		context.queryClient.ensureQueryData(resultsQueryOptions),
 	component: RouteComponent,
 })
 
 function RouteComponent() {
+	return (
+		<Suspense fallback={<LoadingResults />}>
+			<Page />
+		</Suspense>
+	)
+}
+
+function Page() {
+	const { data: resultsData } = useSuspenseQuery(resultsQueryOptions)
+	const adminResults = resultsData[0]?.data ?? {}
+
 	const today = todayStr()
 	const [selectedDate, setSelectedDate] = useState(today)
+
+	const scored = useMemo(() => {
+		return PARTICIPANTES.map(p => ({
+			...p,
+			...calcScore(adminResults, p.results),
+		})).sort((a, b) => b.total - a.total)
+	}, [adminResults])
 
 	const matchdays = useMemo(() => {
 		const set = new Set<string>()
@@ -73,11 +133,17 @@ function RouteComponent() {
 				const homeTeam = TEAMS[g].find(t => t.id === f.home)
 				const awayTeam = TEAMS[g].find(t => t.id === f.away)
 				if (!homeTeam || !awayTeam) continue
-				result.push({ fixture: f, homeTeam, awayTeam })
+				const fixture = { ...f }
+				const adminResult = adminResults[fixture.id]
+				if (adminResult) {
+					fixture.hs = adminResult.hs
+					fixture.as = adminResult.as
+				}
+				result.push({ fixture, homeTeam, awayTeam })
 			}
 		}
 		return result
-	}, [selectedDate])
+	}, [selectedDate, adminResults])
 
 	return (
 		<main className="flex-1 text-on-surface mb-24 lg:pb-0">
@@ -87,11 +153,8 @@ function RouteComponent() {
 						<table className="w-full text-left">
 							<thead>
 								<tr className="border-b border-on-surface/10 text-on-surface-variant font-label-caps">
+									<th className="p-4">#</th>
 									<th className="p-4">Nombre</th>
-									<th className="p-4 text-right">
-										<span className="sm:hidden">PTS</span>
-										<span className="hidden sm:inline">Puntos</span>
-									</th>
 									<th className="p-4 text-right">
 										<span className="sm:hidden">EXC</span>
 										<span className="hidden sm:inline">Resultado exacto</span>
@@ -100,24 +163,29 @@ function RouteComponent() {
 										<span className="sm:hidden">PR</span>
 										<span className="hidden sm:inline">Prode</span>
 									</th>
+									<th className="p-4 text-right">
+										<span className="sm:hidden">PTS</span>
+										<span className="hidden sm:inline">Puntos</span>
+									</th>
 								</tr>
 							</thead>
 							<tbody>
-								{PARTICIPANTES.map(p => (
+								{scored.map((p, i) => (
 									<tr
 										key={p.name}
 										className="border-b border-on-surface/5 last:border-0"
 									>
+										<td className="p-4 text-on-surface-variant text-sm tabular-nums w-8">
+											{i + 1}
+										</td>
 										<td className="p-4 font-medium">{p.name}</td>
 										<td className="p-4 text-right text-on-surface-variant">
-											—
+											{p.exacto}
 										</td>
 										<td className="p-4 text-right text-on-surface-variant">
-											—
+											{p.prode}
 										</td>
-										<td className="p-4 text-right text-on-surface-variant">
-											—
-										</td>
+										<td className="p-4 text-right font-bold">{p.total}</td>
 									</tr>
 								))}
 							</tbody>
@@ -140,7 +208,8 @@ function RouteComponent() {
 								if (isSelected) {
 									cls += " bg-primary/80 text-on-primary ring ring-foreground/5"
 								} else if (isToday) {
-									cls += "bg-red-500 ring-2 ring-primary text-on-surface"
+									cls +=
+										"bg-surface-container ring-2 ring-primary text-on-surface"
 								} else {
 									cls += " bg-surface-container text-on-surface"
 								}
@@ -185,6 +254,7 @@ function RouteComponent() {
 									<div className="divide-y divide-on-surface/5">
 										{PARTICIPANTES.map(p => {
 											const pred = p.results[fixture.id]
+											const pts = matchPoints(adminResults[fixture.id], pred)
 											return (
 												<div
 													key={p.name}
@@ -194,7 +264,18 @@ function RouteComponent() {
 													<span className="font-mono tabular-nums w-1/3 text-center sm:pl-25">
 														{pred ? `${pred.hs} - ${pred.as}` : "—"}
 													</span>
-													<span className="w-1/3"></span>
+													<span className="w-1/3 flex items-center justify-end">
+														{pts > 0 ? (
+															pts === 1 ? (
+																<Star className="fill-on-surface" size={14} />
+															) : (
+																<div className="flex items-center gap-1">
+																	<Star className="fill-on-surface" size={14} />
+																	<Star className="fill-on-surface" size={14} />
+																</div>
+															)
+														) : null}
+													</span>
 												</div>
 											)
 										})}
