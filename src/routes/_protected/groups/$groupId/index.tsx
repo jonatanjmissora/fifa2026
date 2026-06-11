@@ -88,7 +88,7 @@ function GroupsRoute() {
 									<button
 										key={g}
 										type="button"
-										className={`shrink-0 px-6 py-2 rounded-lg font-bold text-xl cursor-pointer w-[calc(100%/12)] text-center flex items-center justify-center ${
+										className={`shrink-0 px-6 py-2 rounded-lg font-bold text-xl cursor-pointer w-[calc(100%/12.80)] text-center flex items-center justify-center ${
 											isActive
 												? "bg-gray-500 text-on-primary"
 												: "bg-surface-container text-on-surface-variant"

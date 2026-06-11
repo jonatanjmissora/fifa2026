@@ -54,18 +54,20 @@ export function FixtureCard({
 				</div>
 				<div className="flex items-center gap-1 sm:gap-6 w-1/3 justify-center">
 					<input
-						className={`w-12 sm:w-20 h-10 sm:h-14 text-center font-score-display text-black/80 rounded-lg border-none focus:ring-2 focus:ring-primary transition-all bg-white/90`}
+						className={`w-12 sm:w-20 h-10 sm:h-14 text-center font-score-display text-black/80 rounded-lg border-none focus:none bg-white/90`}
 						type="number"
 						value={fixture.hs ?? ""}
 						placeholder="-"
+						readOnly
 						onChange={e => onScoreChange(fixture.id, "home", e.target.value)}
 					/>
 					<span className="font-bold text-xl">vs</span>
 					<input
-						className={`w-12 sm:w-20 h-10 sm:h-14 text-center font-score-display text-black/80 rounded-lg border-none focus:ring-2 focus:ring-primary transition-all bg-white/90`}
+						className={`w-12 sm:w-20 h-10 sm:h-14 text-center font-score-display text-black/80 rounded-lg border-none focus:none bg-white/90`}
 						type="number"
 						value={fixture.as ?? ""}
 						placeholder="-"
+						readOnly
 						onChange={e => onScoreChange(fixture.id, "away", e.target.value)}
 					/>
 				</div>

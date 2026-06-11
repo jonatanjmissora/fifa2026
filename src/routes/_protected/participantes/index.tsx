@@ -206,10 +206,11 @@ function Page() {
 									"text-center p-3 rounded-lg transition-colors cursor-pointer"
 
 								if (isSelected) {
-									cls += " bg-primary/80 text-on-primary ring ring-foreground/5"
+									cls +=
+										" bg-gray-500 ring-2 ring-foreground/20 text-on-surface"
 								} else if (isToday) {
 									cls +=
-										"bg-surface-container ring-2 ring-primary text-on-surface"
+										" bg-surface-container ring-2 ring-foreground/20 text-on-surface"
 								} else {
 									cls += " bg-surface-container text-on-surface"
 								}
