@@ -215,6 +215,22 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
+  /* Standard colors for direct use (bg-white, bg-gray-500, etc.) */
+  --color-white: oklch(1 0 0);
+  --color-black: oklch(0.141 0.005 285.823);
+  --color-gray-50: var(--gray-50);
+  --color-gray-100: var(--gray-100);
+  --color-gray-200: var(--gray-200);
+  --color-gray-400: var(--gray-400);
+  --color-gray-500: var(--gray-500);
+  --color-gray-600: var(--gray-600);
+  --color-gray-700: var(--gray-700);
+  --color-gray-800: var(--gray-800);
+  --color-gray-900: var(--gray-900);
+  --color-red-300: var(--red-300);
+  --color-red-400: var(--red-400);
+  --color-red-500: var(--red-500);
+
   /* Custom spacing */
   --spacing-gutter: 16px;
   --spacing-margin-desktop: 32px;

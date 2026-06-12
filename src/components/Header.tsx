@@ -6,6 +6,7 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuGroup,
+	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -31,7 +32,7 @@ export default function Header() {
 
 				{session ? (
 					<div className="">
-						<DropdownMenuDemo name={session.user?.name} />
+						<DropdownMenuDemo name={session.user?.name} user={session.user} />
 					</div>
 				) : null}
 			</nav>
@@ -39,8 +40,15 @@ export default function Header() {
 	)
 }
 
-export function DropdownMenuDemo({ name }: { name: string }) {
+export function DropdownMenuDemo({
+	name,
+	user,
+}: {
+	name: string
+	user: { email?: string | null }
+}) {
 	const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+	const isAdmin = user.email === "jonatanjmissora@gmail.com"
 
 	return (
 		<DropdownMenu open={isUserMenuOpen} onOpenChange={setIsUserMenuOpen}>
@@ -55,6 +63,13 @@ export function DropdownMenuDemo({ name }: { name: string }) {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-40 p-4" align="end">
 				<DropdownMenuGroup>
+					{isAdmin && (
+						<Link to="/admin" onClick={() => setIsUserMenuOpen(false)}>
+							<DropdownMenuItem className="cursor-pointer flex justify-center">
+								Admin
+							</DropdownMenuItem>
+						</Link>
+					)}
 					<LogoutAlertDialog setUserMenuOpen={setIsUserMenuOpen} />
 					<DropdownMenuSeparator />
 				</DropdownMenuGroup>
