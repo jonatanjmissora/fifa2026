@@ -41,7 +41,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 3,
 		name: "Corea del Sur",
-		flag: "/flags/772.png",
+		flag: "/flags/772.svg",
 		letters: "KOR",
 		group: "A",
 		matches: [
@@ -449,7 +449,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 37,
 		name: "Argentina",
-		flag: "/flags/762.png",
+		flag: "/flags/762.svg",
 		letters: "ARG",
 		group: "J",
 		matches: [
@@ -485,7 +485,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 40,
 		name: "Jordania",
-		flag: "/flags/8049.png",
+		flag: "/flags/8049.svg",
 		letters: "JOR",
 		group: "J",
 		matches: [
@@ -521,7 +521,7 @@ export const teams: TeamEntry[] = [
 	{
 		id: 43,
 		name: "Uzbekistán",
-		flag: "/flags/8070.png",
+		flag: "/flags/8070.svg",
 		letters: "UZB",
 		group: "K",
 		matches: [

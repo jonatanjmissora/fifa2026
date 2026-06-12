@@ -16,7 +16,11 @@ export const getRouter = () => {
 			session: null,
 		},
 
+		defaultPendingMs: 100,
+		defaultPendingMinMs: 500,
 		defaultPreload: "intent",
+		defaultPreloadStaleTime: 30_000,
+		scrollRestoration: true,
 	})
 
 	setupRouterSsrQueryIntegration({ router, queryClient: rqContext.queryClient })

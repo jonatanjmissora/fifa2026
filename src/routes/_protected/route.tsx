@@ -1,8 +1,14 @@
-import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router"
-import { protectedRoute } from "@/lib/protected-route"
+import { createFileRoute, Link, Outlet, useLocation, redirect } from "@tanstack/react-router"
+import { LoadingResults } from "@/components/loading-results"
 
 export const Route = createFileRoute("/_protected")({
-	loader: async () => await protectedRoute(),
+	pendingComponent: LoadingResults,
+	loader: async ({ context }) => {
+		if (!context.session) {
+			throw redirect({ to: "/login" })
+		}
+		return context.session
+	},
 	component: RouteComponent,
 })
 
