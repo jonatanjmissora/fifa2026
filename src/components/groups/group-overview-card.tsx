@@ -1,6 +1,7 @@
 import type { GroupId } from "@/lib/data"
 import type { Standing } from "@/lib/standings"
 import { Link } from "@tanstack/react-router"
+import { Flag } from "@/components/ui/flag"
 
 type GroupOverviewCardProps = {
 	groupId: GroupId
@@ -37,11 +38,7 @@ export function GroupOverviewCard({
 						{standings.map(t => (
 							<div key={t.id} className="flex w-full items-center">
 								<span className="py-2 flex items-center gap-2 font-semibold w-1/2">
-									<img
-										src={t.flag}
-										alt={t.name}
-										className="w-5 h-4 object-cover"
-									/>
+									<Flag src={t.flag} alt={t.name} className="w-5 h-4" />
 									<span className="truncate">{t.name}</span>
 								</span>
 								<div className="w-1/2 grid grid-cols-6">

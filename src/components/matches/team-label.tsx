@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 import type { MatchTeam } from "@/lib/matches-data"
+import { Flag } from "@/components/ui/flag"
 
 type TeamLabelProps = {
 	team: MatchTeam
@@ -14,12 +15,8 @@ export function TeamLabel({ team, className }: TeamLabelProps) {
 				className
 			)}
 		>
-			<span>
-				<img
-					className="max-h-5 w-5 crest-img inline-block"
-					src={team.crest}
-					alt={team.name}
-				/>
+		<span>
+			<Flag src={team.crest} alt={team.name} className="max-h-5 w-5 crest-img inline-block align-middle" />
 				<span className="hidden text-on-surface-variant align-middle md:inline-block">
 					{team.name}
 				</span>

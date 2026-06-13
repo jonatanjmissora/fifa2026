@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { LoadingResults } from "@/components/loading-results"
 import { ChevronRight, ChevronLeft } from "lucide-react"
+import { Flag } from "@/components/ui/flag"
 
 export const Route = createFileRoute("/_protected/admin/")({
 	pendingComponent: LoadingResults,
@@ -112,11 +113,7 @@ function AdminPage() {
 						<div key={f.id} className="flex items-center gap-3 p-3 card">
 							<span className="flex-1 flex-col text-right text-sm font-medium flex items-center justify-end gap-1">
 								{homeTeam?.flag && (
-									<img
-										src={homeTeam.flag}
-										alt=""
-										className="size-8 object-contain"
-									/>
+									<Flag src={homeTeam.flag} className="size-8" />
 								)}
 								{f.home}
 							</span>
@@ -141,11 +138,7 @@ function AdminPage() {
 							/>
 							<span className="flex-1 flex-col text-sm font-medium flex items-center gap-1">
 								{awayTeam?.flag && (
-									<img
-										src={awayTeam.flag}
-										alt=""
-										className="size-8 object-contain"
-									/>
+									<Flag src={awayTeam.flag} className="size-8" />
 								)}
 								{f.away}
 							</span>

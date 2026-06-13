@@ -14,6 +14,21 @@ const config = defineConfig({
 			"@": fileURLToPath(new URL("./src", import.meta.url)),
 		},
 	},
+	build: {
+		rollupOptions: {
+			output: {
+				manualChunks(id) {
+					if (id.includes("node_modules/react-dom")) return "vendor-react"
+					if (id.includes("node_modules/react")) return "vendor-react"
+					if (id.includes("node_modules/@tanstack")) return "vendor-tanstack"
+					if (id.includes("node_modules/@radix-ui")) return "vendor-radix"
+					if (id.includes("node_modules/lucide-react")) return "vendor-ui"
+					if (id.includes("node_modules/sonner")) return "vendor-ui"
+					if (id.includes("node_modules/tailwind-merge")) return "vendor-ui"
+				},
+			},
+		},
+	},
 	plugins: [
 		devtools(),
 		nitro(),
