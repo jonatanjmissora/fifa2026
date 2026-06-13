@@ -195,6 +195,23 @@ export const deleteEntidadServer = createServerFn({ method: "POST" })
 - Actualizar cache con `setQueryData` / `removeQueries`
 - Usar `useQueryClient()` al inicio del hook
 
+### ⚠️ QueryClient defaults
+
+Configurar `staleTime` y `gcTime` globales al crear el `QueryClient`. Esto evita refetches innecesarios al montar componentes.
+
+```ts
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 30 * 1000,    // Considerar datos frescos por 30s
+      gcTime: 5 * 60 * 1000,   // Mantener en cache 5min después de desuscribirse
+    },
+  },
+})
+```
+
+Si un `queryOptions` necesita un `staleTime` distinto al global, definirlo localmente.
+
 ### ⚠️ Estrategia de cache en mutaciones
 
 Al implementar mutation hooks, preguntar al usuario qué escenario aplica:
@@ -387,6 +404,21 @@ function DeleteForm({ entidad, setOpen }: { entidad: TipoEntidad; setOpen: (v: b
     </form>
   )
 }
+```
+
+## 5. Capa Ruteo (Loaders)
+
+### Convenciones
+- Usar `prefetchQuery` en vez de `ensureQueryData` para cargar datos en loaders de rutas
+- `ensureQueryData` chequea si el dato existe y solo fetchea si no; en SSR queremos garantizar que el servidor obtenga datos frescos
+- `prefetchQuery` fetchea siempre (si está dentro del `staleTime` no dispara petición real)
+
+```ts
+export const Route = createFileRoute("/ruta")({
+  loader: ({ context }) =>
+    context.queryClient.prefetchQuery(resultsQueryOptions),
+  component: RouteComponent,
+})
 ```
 
 ## Orden de implementación para entidad nueva

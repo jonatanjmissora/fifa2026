@@ -85,7 +85,7 @@ function calcScore(
 export const Route = createFileRoute("/_protected/participantes/")({
 	pendingComponent: LoadingResults,
 	loader: ({ context }) =>
-		context.queryClient.ensureQueryData(resultsQueryOptions),
+		context.queryClient.prefetchQuery(resultsQueryOptions),
 	component: RouteComponent,
 })
 

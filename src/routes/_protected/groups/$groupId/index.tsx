@@ -13,7 +13,7 @@ import { resultsQueryOptions } from "queries/results/results-query"
 export const Route = createFileRoute("/_protected/groups/$groupId/")({
 	pendingComponent: LoadingGroups,
 	loader: ({ context }) =>
-		context.queryClient.ensureQueryData(resultsQueryOptions),
+		context.queryClient.prefetchQuery(resultsQueryOptions),
 	component: RouteComponent,
 })
 

@@ -15,7 +15,7 @@ import { Flag } from "@/components/ui/flag"
 export const Route = createFileRoute("/_protected/admin/")({
 	pendingComponent: LoadingResults,
 	loader: ({ context }) =>
-		context.queryClient.ensureQueryData(resultsQueryOptions),
+		context.queryClient.prefetchQuery(resultsQueryOptions),
 	component: RouteComponent,
 })
 
@@ -66,8 +66,12 @@ function AdminPage() {
 	const fixtures = FIXTURES[currentGroup]
 
 	const handleSubmit = async () => {
-		const dataId = resultsData[0]?.id ?? "admin-predictions"
-		await saveResults({ data: { id: dataId, data: scores } })
+		try {
+			const dataId = resultsData[0]?.id ?? "admin-predictions"
+			await saveResults({ data: { id: dataId, data: scores } })
+		} catch {
+			// Error handled by useEditResults onError
+		}
 	}
 
 	return (

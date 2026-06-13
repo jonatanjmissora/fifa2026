@@ -11,7 +11,7 @@ import { resultsQueryOptions } from "queries/results/results-query"
 export const Route = createFileRoute("/_protected/")({
 	pendingComponent: LoadingResults,
 	loader: ({ context }) =>
-		context.queryClient.ensureQueryData(resultsQueryOptions),
+		context.queryClient.prefetchQuery(resultsQueryOptions),
 	component: RouteComponent,
 })
 
