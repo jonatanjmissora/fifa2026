@@ -1,5 +1,6 @@
 import type { Fixture, Team } from "@/lib/data"
 import { Clock } from "lucide-react"
+import { Flag } from "@/components/ui/flag"
 
 type FixtureCardProps = {
 	fixture: Fixture
@@ -57,11 +58,7 @@ export function FixtureCard({
 			</div>
 			<div className="flex-1 flex justify-around sm:justify-center items-start sm:items-center gap-4">
 				<div className="flex items-center gap-1 sm:gap-3 w-1/3 justify-end flex-col sm:flex-row">
-					<img
-						src={homeTeam.flag}
-						alt={homeTeam.name}
-						className="w-10 h-6 object-cover rounded-sm shadow-sm"
-					/>
+					<Flag src={homeTeam.flag} alt={homeTeam.name} className="w-10 h-6" />
 					<span className="text-sm sm:text-xl font-semibold text-center text-on-surface">
 						{homeTeam.name.toUpperCase()}
 					</span>
@@ -86,11 +83,7 @@ export function FixtureCard({
 					/>
 				</div>
 				<div className="flex items-center gap-1 sm:gap-3 w-1/3 justify-start flex-col sm:flex-row">
-					<img
-						src={awayTeam.flag}
-						alt={awayTeam.name}
-						className="w-10 h-6 object-cover rounded-sm shadow-sm"
-					/>
+					<Flag src={awayTeam.flag} alt={awayTeam.name} className="w-10 h-6" />
 					<span className="text-sm sm:text-xl font-semibold text-center text-on-surface">
 						{awayTeam.name.toUpperCase()}
 					</span>

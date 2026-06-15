@@ -15,8 +15,12 @@ export function TeamLabel({ team, className }: TeamLabelProps) {
 				className
 			)}
 		>
-		<span>
-			<Flag src={team.crest} alt={team.name} className="max-h-5 w-5 crest-img inline-block align-middle" />
+			<span>
+				<Flag
+					src={team.crest}
+					alt={team.name}
+					className="max-h-5 w-5 crest-img inline-block align-middle"
+				/>
 				<span className="hidden text-on-surface-variant align-middle md:inline-block">
 					{team.name}
 				</span>

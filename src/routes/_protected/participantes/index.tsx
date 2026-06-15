@@ -1,4 +1,4 @@
-import { useState, useMemo, Suspense } from "react"
+import { useState, useMemo, useRef, useEffect, Suspense } from "react"
 import { createFileRoute } from "@tanstack/react-router"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { PARTICIPANTES } from "@/lib/predictions"
@@ -103,6 +103,18 @@ function Page() {
 
 	const today = todayStr()
 	const [selectedDate, setSelectedDate] = useState(today)
+	const scrollRef = useRef<HTMLDivElement>(null)
+
+	useEffect(() => {
+		const el = scrollRef.current?.querySelector<HTMLButtonElement>(
+			`[data-date="${selectedDate}"]`
+		)
+		el?.scrollIntoView({
+			behavior: "smooth",
+			inline: "center",
+			block: "nearest",
+		})
+	}, [selectedDate])
 
 	const scored = useMemo(() => {
 		return PARTICIPANTES.map(p => ({
@@ -143,7 +155,7 @@ function Page() {
 				result.push({ fixture, homeTeam, awayTeam, group: g })
 			}
 		}
-		return result
+		return result.sort((a, b) => a.fixture.date.localeCompare(b.fixture.date))
 	}, [selectedDate, adminResults])
 
 	return (
@@ -198,14 +210,18 @@ function Page() {
 					<h2 className="font-headline-md md:font-headline-lg text-foreground mb-6">
 						Fechas
 					</h2>
-					<div className="card p-4">
-						<div className="flex gap-2 overflow-x-auto pb-1">
+					<div className="card p-4 py-0">
+						<div ref={scrollRef} className="flex gap-2 overflow-x-auto my-2">
 							{matchdays.map(date => {
 								const isToday = date === today
 								const isSelected = date === selectedDate
-								const align = date < today ? "text-left" : date > today ? "text-right" : "text-center"
-								let cls =
-									`whitespace-nowrap ${align} p-3 rounded-lg transition-colors cursor-pointer`
+								const align =
+									date < today
+										? "text-left"
+										: date > today
+											? "text-right"
+											: "text-center"
+								let cls = `whitespace-nowrap ${align} px-3 py-2 my-3 rounded-lg transition-colors cursor-pointer`
 
 								if (isSelected) {
 									cls +=
@@ -222,10 +238,16 @@ function Page() {
 										key={date}
 										type="button"
 										className={cls}
+										data-date={date}
 										onClick={() => setSelectedDate(date)}
 									>
-										<span className="text-xs text-inherit opacity-70">{dayName(date)}</span>
-										<span className="font-bold text-sm"> {formatDate(date)}</span>
+										<span className="text-xs text-inherit opacity-70">
+											{dayName(date)}
+										</span>
+										<span className="font-bold text-sm">
+											{" "}
+											{formatDate(date)}
+										</span>
 									</button>
 								)
 							})}
