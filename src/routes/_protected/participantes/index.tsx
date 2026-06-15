@@ -126,6 +126,7 @@ function Page() {
 			fixture: (typeof FIXTURES)[(typeof GROUPS)[number]][number]
 			homeTeam: (typeof TEAMS)[(typeof GROUPS)[number]][number]
 			awayTeam: (typeof TEAMS)[(typeof GROUPS)[number]][number]
+			group: string
 		}[] = []
 		for (const g of GROUPS) {
 			for (const f of FIXTURES[g]) {
@@ -139,7 +140,7 @@ function Page() {
 					fixture.hs = adminResult.hs
 					fixture.as = adminResult.as
 				}
-				result.push({ fixture, homeTeam, awayTeam })
+				result.push({ fixture, homeTeam, awayTeam, group: g })
 			}
 		}
 		return result
@@ -198,12 +199,13 @@ function Page() {
 						Fechas
 					</h2>
 					<div className="card p-4">
-						<div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-7 gap-2">
+						<div className="flex gap-2 overflow-x-auto pb-1">
 							{matchdays.map(date => {
 								const isToday = date === today
 								const isSelected = date === selectedDate
+								const align = date < today ? "text-left" : date > today ? "text-right" : "text-center"
 								let cls =
-									"text-center p-3 rounded-lg transition-colors cursor-pointer"
+									`whitespace-nowrap ${align} p-3 rounded-lg transition-colors cursor-pointer`
 
 								if (isSelected) {
 									cls +=
@@ -222,10 +224,8 @@ function Page() {
 										className={cls}
 										onClick={() => setSelectedDate(date)}
 									>
-										<div className="text-xs text-inherit opacity-70">
-											{dayName(date)}
-										</div>
-										<div className="font-bold text-sm">{formatDate(date)}</div>
+										<span className="text-xs text-inherit opacity-70">{dayName(date)}</span>
+										<span className="font-bold text-sm"> {formatDate(date)}</span>
 									</button>
 								)
 							})}
@@ -243,7 +243,7 @@ function Page() {
 								No hay partidos en esta fecha
 							</div>
 						) : (
-							dateFixtures.map(({ fixture, homeTeam, awayTeam }) => (
+							dateFixtures.map(({ fixture, homeTeam, awayTeam, group }) => (
 								<div key={fixture.id} className="flex flex-col">
 									<FixtureCard
 										fixture={fixture}
@@ -251,6 +251,8 @@ function Page() {
 										awayTeam={awayTeam}
 										onScoreChange={() => {}}
 										showDate={false}
+										group={group}
+										showGroup
 									/>
 									<div className="divide-y divide-on-surface/5">
 										{PARTICIPANTES.map(p => {

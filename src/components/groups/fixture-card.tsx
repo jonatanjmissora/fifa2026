@@ -11,6 +11,8 @@ type FixtureCardProps = {
 		value: string
 	) => void
 	showDate?: boolean
+	group?: string
+	showGroup?: boolean
 }
 
 export function FixtureCard({
@@ -19,6 +21,8 @@ export function FixtureCard({
 	awayTeam,
 	onScoreChange,
 	showDate = true,
+	group,
+	showGroup = false,
 }: FixtureCardProps) {
 	const date = fixture.date.split(" ")[0]
 	const time = fixture.date.split(" ")[1]
@@ -27,6 +31,11 @@ export function FixtureCard({
 		<article className="card flex flex-col sm:flex-row gap-4">
 			<div className="flex justify-between items-center ">
 				<div className="hidden sm:flex font-mono text-base sm:text-xl gap-6 items-center w-full">
+					{showGroup && group && (
+						<span className="font-label-caps text-xs px-2 py-0.5 rounded bg-on-surface/10 text-on-surface-variant">
+							Grupo {group}
+						</span>
+					)}
 					{showDate && <span>{date}</span>}
 					<span className="flex gap-1 items-center text-amber-600">
 						<Clock size={16} />
@@ -34,6 +43,11 @@ export function FixtureCard({
 					</span>
 				</div>
 				<div className="sm:hidden font-mono text-base sm:text-xl flex justify-between items-center w-full mb-3">
+					{showGroup && group && (
+						<span className="font-label-caps tracking-widest px-2 py-0.5 rounded bg-on-surface/10 text-on-surface-variant">
+							GRUPO {group}
+						</span>
+					)}
 					{showDate && <span>{date}</span>}
 					<span className="flex gap-1 items-center text-amber-600">
 						<Clock size={16} />

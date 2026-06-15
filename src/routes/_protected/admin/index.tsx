@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react"
+import { Suspense, useMemo, useState } from "react"
 import { createFileRoute } from "@tanstack/react-router"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { GROUPS, FIXTURES, TEAMS } from "@/lib/data"
@@ -9,7 +9,7 @@ import type { ResultsData } from "db/results/schema"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { LoadingResults } from "@/components/loading-results"
-import { ChevronRight, ChevronLeft } from "lucide-react"
+import { ChevronLeft, ChevronRight, Clock } from "lucide-react"
 import { Flag } from "@/components/ui/flag"
 
 export const Route = createFileRoute("/_protected/admin/")({
@@ -32,9 +32,6 @@ function AdminPage() {
 	const { data: resultsData } = useSuspenseQuery(resultsQueryOptions)
 	const existingData = resultsData[0]?.data ?? {}
 	const { mutateAsync: saveResults, isPending } = useEditResults()
-
-	const [groupIndex, setGroupIndex] = useState(0)
-	const currentGroup = GROUPS[groupIndex]
 
 	const [scores, setScores] = useState<ResultsData>(() => {
 		const initial: ResultsData = {}
@@ -63,7 +60,54 @@ function AdminPage() {
 		})
 	}
 
-	const fixtures = FIXTURES[currentGroup]
+	const allFixtures = useMemo(() => {
+		const flat: {
+			fixture: (typeof FIXTURES)[(typeof GROUPS)[number]][number]
+			group: string
+			homeTeam: (typeof TEAMS)[(typeof GROUPS)[number]][number]
+			awayTeam: (typeof TEAMS)[(typeof GROUPS)[number]][number]
+		}[] = []
+		for (const g of GROUPS) {
+			const teams = TEAMS[g]
+			for (const f of FIXTURES[g]) {
+				const homeTeam = teams.find(t => t.id === f.home)
+				const awayTeam = teams.find(t => t.id === f.away)
+				if (!homeTeam || !awayTeam) continue
+				flat.push({ fixture: f, group: g, homeTeam, awayTeam })
+			}
+		}
+		flat.sort((a, b) => a.fixture.date.localeCompare(b.fixture.date))
+		return flat
+	}, [])
+
+	const dates = useMemo(() => {
+		const set = new Set<string>()
+		for (const { fixture } of allFixtures) {
+			set.add(fixture.date.split(" ")[0])
+		}
+		return Array.from(set)
+	}, [allFixtures])
+
+	const todayStr = () => {
+		const d = new Date()
+		const y = d.getFullYear()
+		const m = String(d.getMonth() + 1).padStart(2, "0")
+		const day = String(d.getDate()).padStart(2, "0")
+		return `${y}/${m}/${day}`
+	}
+
+	const [dateIndex, setDateIndex] = useState(() => {
+		const today = todayStr()
+		const idx = dates.indexOf(today)
+		return idx >= 0 ? idx : 0
+	})
+	const currentDate = dates[dateIndex] ?? ""
+
+	const dateFixtures = useMemo(
+		() =>
+			allFixtures.filter(({ fixture }) => fixture.date.startsWith(currentDate)),
+		[allFixtures, currentDate]
+	)
 
 	const handleSubmit = async () => {
 		try {
@@ -75,7 +119,7 @@ function AdminPage() {
 	}
 
 	return (
-		<div className="flex flex-col gap-6">
+		<div className="flex flex-col gap-6 pb-20">
 			<div className="flex items-center justify-between">
 				<h1 className="text-lg font-bold">Resultados</h1>
 				<Button
@@ -91,61 +135,68 @@ function AdminPage() {
 				<Button
 					variant="outline"
 					size="icon"
-					disabled={groupIndex === 0}
-					onClick={() => setGroupIndex(i => i - 1)}
+					disabled={dateIndex === 0}
+					onClick={() => setDateIndex(i => i - 1)}
 				>
-					<ChevronLeft className="size-4" />
+					<ChevronLeft className="size-5" />
 				</Button>
-				<span className="font-semibold text-lg">Grupo {currentGroup}</span>
+				<span className="font-semibold text-lg">{currentDate}</span>
 				<Button
 					variant="outline"
 					size="icon"
-					disabled={groupIndex === GROUPS.length - 1}
-					onClick={() => setGroupIndex(i => i + 1)}
+					disabled={dateIndex === dates.length - 1}
+					onClick={() => setDateIndex(i => i + 1)}
 				>
-					<ChevronRight className="size-4" />
+					<ChevronRight className="size-5" />
 				</Button>
 			</div>
 
 			<div className="flex flex-col gap-3">
-				{fixtures.map(f => {
-					const score = scores[f.id]
-					const teams = TEAMS[currentGroup]
-					const homeTeam = teams.find(t => t.id === f.home)
-					const awayTeam = teams.find(t => t.id === f.away)
+				{dateFixtures.map(({ fixture, group, homeTeam, awayTeam }) => {
+					const score = scores[fixture.id]
+					const time = fixture.date.split(" ")[1]
 					return (
-						<div key={f.id} className="flex items-center gap-3 p-3 card">
-							<span className="flex-1 flex-col text-right text-sm font-medium flex items-center justify-end gap-1">
-								{homeTeam?.flag && (
-									<Flag src={homeTeam.flag} className="size-8" />
-								)}
-								{f.home}
-							</span>
-							<Input
-								type="number"
-								min="0"
-								max="99"
-								className="w-16 text-center bg-white/80"
-								value={score?.hs ?? ""}
-								onChange={e => updateScore(f.id, "hs", e.target.value)}
-								placeholder="-"
-							/>
-							<span className="text-muted-foreground">vs</span>
-							<Input
-								type="number"
-								min="0"
-								max="99"
-								className="w-16 text-center bg-white/80"
-								value={score?.as ?? ""}
-								onChange={e => updateScore(f.id, "as", e.target.value)}
-								placeholder="-"
-							/>
-							<span className="flex-1 flex-col text-sm font-medium flex items-center gap-1">
-								{awayTeam?.flag && (
-									<Flag src={awayTeam.flag} className="size-8" />
-								)}
-								{f.away}
-							</span>
+						<div key={fixture.id} className="flex flex-col gap-2 p-3 card">
+							<div className="flex items-center justify-between gap-2 text-xs text-on-surface-variant font-mono">
+								<span>Grupo {group}</span>
+								<div className="flex items-center gap-2 text-amber-700">
+									<Clock size={14} />
+									<span>{time}</span>
+								</div>
+							</div>
+							<div className="flex items-center gap-3">
+								<span className="flex-1 flex-col text-right text-sm font-medium flex items-center justify-end gap-1">
+									{homeTeam?.flag && (
+										<Flag src={homeTeam.flag} className="size-8" />
+									)}
+									{fixture.home}
+								</span>
+								<Input
+									type="number"
+									min="0"
+									max="99"
+									className="w-16 text-center bg-white dark:bg-white text-black dark:text-black"
+									value={score?.hs ?? ""}
+									onChange={e => updateScore(fixture.id, "hs", e.target.value)}
+									placeholder="-"
+								/>
+								<span className="text-muted-foreground">vs</span>
+								<Input
+									type="number"
+									min="0"
+									max="99"
+									className="w-16 text-center bg-white dark:bg-white text-black dark:text-black"
+									value={score?.as ?? ""}
+									onChange={e => updateScore(fixture.id, "as", e.target.value)}
+									placeholder="-"
+								/>
+								<span className="flex-1 flex-col text-sm font-medium flex items-center gap-1">
+									{awayTeam?.flag && (
+										<Flag src={awayTeam.flag} className="size-8" />
+									)}
+									{fixture.away}
+								</span>
+							</div>
 						</div>
 					)
 				})}
