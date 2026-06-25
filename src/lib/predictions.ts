@@ -551,10 +551,10 @@ export const ROMINA_PREDICTIONS: Record<
 	3: { as: 1, hs: 2 }, // CZE vs MEX12
 	// Group B
 	7: { hs: 0, as: 2 }, // CAN vs BIH02
-	12: { hs: 0, as: 2 }, // QAT vs SUI02
-	10: { as: 1, hs: 1 }, // SUI vs BIH11
-	8: { hs: 1, as: 2 }, // CAN vs QAT12
-	11: { hs: 1, as: 2 }, // BIH vs QAT12
+	12: { hs: 0, as: 1 }, // QAT vs SUI01
+	10: { as: 1, hs: 2 }, // SUI vs BIH12
+	8: { hs: 0, as: 0 }, // CAN vs QAT00
+	11: { hs: 2, as: 0 }, // BIH vs QAT20
 	9: { as: 2, hs: 1 }, // SUI vs CAN21
 	// Group C`
 	13: { hs: 3, as: 2 }, // BRA vs MAR32
